@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.backgroundColor = UIColor.init(hexString: "#293038")
         self.window?.rootViewController = WGBaseNavViewController.init(rootViewController: WGHomeViewController.init())
         self.window?.makeKeyAndVisible()
+        wg_getCurrentTime()
         return true
     }
 

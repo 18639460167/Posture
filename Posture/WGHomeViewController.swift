@@ -34,6 +34,13 @@ class WGHomeViewController: WGBaseViewController {
             make.height.equalTo(101*ScreenScale)
             make.top.equalToSuperview().offset(56*ScreenScale)
         }
+        
+        self.resultImageView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(SafeTopHeight)
+            make.width.equalTo(250*ScreenScale)
+        }
+        
         self.testBtn.snp.makeConstraints { (make) in
             make.top.equalTo(imageView.snp_bottom).offset(15*ScreenScale)
             make.centerX.equalToSuperview()
@@ -83,14 +90,29 @@ class WGHomeViewController: WGBaseViewController {
         WGNetWorkTool.getBaiduAccesstToekn()
     }
     @objc func historyAction() {
-        WGImageTool.compressedImageFiles(UIImage.init(named: "demo1.jpeg")!) { (data) in
+        let reultImage = UIImage.init(named: "demo.jpeg")
+        guard let image = reultImage?.zs_fixedImageToUpOrientation() else {
+            return
+        }
+        WGImageTool.compressedImageFiles(image) { (data) in
             if let image = UIImage.init(data: data) {
-                WGNetWorkTool.updateImage(image: image)
+                WGNetWorkTool.updateImage(image: image) { (success, infoModel) in
+                    if success, let infoModel = infoModel {
+                        let saveImage = WGNetWorkTool.drawPointInfo(info: infoModel.person_info[0].body_parts!, isFront: true, resultImage: image)
+                        self.resultImageView.image = saveImage
+                    }
+                }
             }
 
         }
     }
     @objc func spineCheckAction() {
-        
+        wg_getCurrentTime()
     }
+    
+    lazy var resultImageView: UIImageView = {
+        let imageView = UIImageView.init(frame: .zero)
+        self.view.addSubview(imageView)
+        return imageView
+    }()
 }

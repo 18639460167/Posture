@@ -25,20 +25,26 @@ public let SafeBottomHeight: CGFloat = SafeAreaInsets.bottom
 let wordKean: CGFloat = 2.0     // 字间距
 let lineHeight: CGFloat = 3.0   // 行间距
 
-// 词显示线条样式
-// index: 词索引 lineNumber：一行显示个数
-// 返回结果：(顶部是否显示，左侧是否显示, 是否显示blue)
-func wordsShowLineInfo(index: NSInteger, lineNumber: NSInteger) -> (Bool, Bool, Bool) {
-    let value = index / lineNumber
-    let isBlue = (value % 2) != 0
-    
-    var topShow = (index)/lineNumber == 0
-    let leftShow = (index)%lineNumber == 0
-    if leftShow == true, topShow == false {
-        topShow = false
-    }
-    return (topShow, leftShow, isBlue)
+// 获取啊当前时间戳
+func wg_getCurrentTime() -> String {
+    let date = NSDate.init(timeIntervalSinceNow: 0)
+    let a = date.timeIntervalSince1970
+    let b = Int(a)
+    let str = "\(b)"
+    print("当前时间:\(str)")
+    return str
 }
+
+// view转image
+func wg_getImageFromView(view:UIView) ->UIImage{
+    UIGraphicsBeginImageContext(view.bounds.size)
+    view.layer.render(in: UIGraphicsGetCurrentContext()!)
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image!
+
+}
+
 
 extension UIColor {
     /// 将十六进制颜色转换为UIColor
@@ -298,49 +304,5 @@ extension Date {
         
         let resultCalendar = Calendar(identifier: .gregorian)
         return resultCalendar.date(from: resultComps) ?? Date()
-    }
-}
-
-extension Int {
-    var cn: String {
-        get {
-            if self == 0 {
-                return "零"
-            }
-            let zhNumbers = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"]
-            let units = ["", "十", "百", "千", "万", "十", "百", "千", "亿", "十","百","千"]
-            var cn = ""
-            var currentNum = 0
-            var beforeNum = 0
-            let intLength = Int(floor(log10(Double(self))))
-            for index in 0...intLength {
-                currentNum = self/Int(pow(10.0,Double(index)))%10
-                if index == 0{
-                    if currentNum != 0 {
-                        cn = zhNumbers[currentNum]
-                        continue
-                    }
-                } else {
-                    beforeNum = self/Int(pow(10.0,Double(index-1)))%10
-                }
-                if [1,2,3,5,6,7,9,10,11].contains(index) {
-                    if currentNum == 1 && [1,5,9].contains(index) && index == intLength { // 处理一开头的含十单位
-                        cn = units[index] + cn
-                    } else if currentNum != 0 {
-                        cn = zhNumbers[currentNum] + units[index] + cn
-                    } else if beforeNum != 0 {
-                        cn = zhNumbers[currentNum] + cn
-                    }
-                    continue
-                }
-                if [4,8,12].contains(index) {
-                    cn = units[index] + cn
-                    if (beforeNum != 0 && currentNum == 0) || currentNum != 0 {
-                        cn = zhNumbers[currentNum] + cn
-                    }
-                }
-            }
-            return cn
-        }
     }
 }

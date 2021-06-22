@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		25B8A2D2018513D9D878AA53 /* Pods_Posture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A2B15F9F4D1CA7C4088CCF /* Pods_Posture.framework */; };
+		9CEC4B9C2680521500D08443 /* WGResourceCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC4B9B2680521500D08443 /* WGResourceCacheTool.swift */; };
+		9CEC4BA12680526000D08443 /* WGBaseDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC4BA02680526000D08443 /* WGBaseDataModel.swift */; };
+		9CEC4BA62680541200D08443 /* WGFileTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC4BA52680541200D08443 /* WGFileTool.swift */; };
+		9CEC4BBD2680628F00D08443 /* WGBodyPointInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC4BBC2680628F00D08443 /* WGBodyPointInfoModel.swift */; };
 		C1536AF3267CD38700D8879C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1536AF2267CD38700D8879C /* AppDelegate.swift */; };
 		C1536AF7267CD38700D8879C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1536AF6267CD38700D8879C /* ViewController.swift */; };
 		C1536AFA267CD38700D8879C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1536AF8267CD38700D8879C /* Main.storyboard */; };
@@ -23,6 +27,7 @@
 		C1536B6C267CE64100D8879C /* WGImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C1536B6B267CE64100D8879C /* WGImageTool.m */; };
 		C1536B71267CE87B00D8879C /* demo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C1536B70267CE87B00D8879C /* demo.jpeg */; };
 		C1536B76267CFADD00D8879C /* demo1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C1536B75267CFADD00D8879C /* demo1.jpeg */; };
+		C19AAB16268239660064D8CC /* YYBaseTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB15268239660064D8CC /* YYBaseTool.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +50,10 @@
 /* Begin PBXFileReference section */
 		0EC3D93AE737F746C267FD34 /* Pods-Posture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Posture.release.xcconfig"; path = "Target Support Files/Pods-Posture/Pods-Posture.release.xcconfig"; sourceTree = "<group>"; };
 		17A2B15F9F4D1CA7C4088CCF /* Pods_Posture.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Posture.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CEC4B9B2680521500D08443 /* WGResourceCacheTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGResourceCacheTool.swift; sourceTree = "<group>"; };
+		9CEC4BA02680526000D08443 /* WGBaseDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGBaseDataModel.swift; sourceTree = "<group>"; };
+		9CEC4BA52680541200D08443 /* WGFileTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGFileTool.swift; sourceTree = "<group>"; };
+		9CEC4BBC2680628F00D08443 /* WGBodyPointInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGBodyPointInfoModel.swift; sourceTree = "<group>"; };
 		C1536AEF267CD38700D8879C /* Posture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Posture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1536AF2267CD38700D8879C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1536AF6267CD38700D8879C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +77,7 @@
 		C1536B6B267CE64100D8879C /* WGImageTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WGImageTool.m; sourceTree = "<group>"; };
 		C1536B70267CE87B00D8879C /* demo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo.jpeg; sourceTree = "<group>"; };
 		C1536B75267CFADD00D8879C /* demo1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo1.jpeg; sourceTree = "<group>"; };
+		C19AAB15268239660064D8CC /* YYBaseTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYBaseTool.swift; sourceTree = "<group>"; };
 		F082C966D74F873A9E38087D /* Pods-Posture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Posture.debug.xcconfig"; path = "Target Support Files/Pods-Posture/Pods-Posture.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +116,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		9CEC4BB8268057AF00D08443 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				C1536B4E267CD56900D8879C /* METools.swift */,
+				C19AAB15268239660064D8CC /* YYBaseTool.swift */,
+				C1536B6A267CE64100D8879C /* WGImageTool.h */,
+				C1536B6B267CE64100D8879C /* WGImageTool.m */,
+				9CEC4BA52680541200D08443 /* WGFileTool.swift */,
+				9CEC4BA02680526000D08443 /* WGBaseDataModel.swift */,
+				9CEC4B9B2680521500D08443 /* WGResourceCacheTool.swift */,
+				9CEC4BBC2680628F00D08443 /* WGBodyPointInfoModel.swift */,
+				C1536B64267CDFCD00D8879C /* WGNetWorkTool.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		A985A2889281F69EFCC11ECB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,10 +168,9 @@
 				C1536AF2267CD38700D8879C /* AppDelegate.swift */,
 				C1536AF6267CD38700D8879C /* ViewController.swift */,
 				C1536B56267CD63800D8879C /* WGHomeViewController.swift */,
-				C1536B6A267CE64100D8879C /* WGImageTool.h */,
-				C1536B6B267CE64100D8879C /* WGImageTool.m */,
 				C1536B75267CFADD00D8879C /* demo1.jpeg */,
 				C1536B70267CE87B00D8879C /* demo.jpeg */,
+				9CEC4BB8268057AF00D08443 /* Tools */,
 				C1536B3A267CD4D800D8879C /* CommonUI */,
 				C1536AF8267CD38700D8879C /* Main.storyboard */,
 				C1536AFB267CD38A00D8879C /* Assets.xcassets */,
@@ -177,10 +202,8 @@
 		C1536B3A267CD4D800D8879C /* CommonUI */ = {
 			isa = PBXGroup;
 			children = (
-				C1536B4E267CD56900D8879C /* METools.swift */,
 				C1536B3E267CD50100D8879C /* WGBaseNavViewController.swift */,
 				C1536B43267CD50600D8879C /* WGBaseViewController.swift */,
-				C1536B64267CDFCD00D8879C /* WGNetWorkTool.swift */,
 			);
 			path = CommonUI;
 			sourceTree = "<group>";
@@ -365,12 +388,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1536B44267CD50600D8879C /* WGBaseViewController.swift in Sources */,
+				9CEC4B9C2680521500D08443 /* WGResourceCacheTool.swift in Sources */,
 				C1536AF7267CD38700D8879C /* ViewController.swift in Sources */,
 				C1536B3F267CD50100D8879C /* WGBaseNavViewController.swift in Sources */,
 				C1536B57267CD63800D8879C /* WGHomeViewController.swift in Sources */,
 				C1536AF3267CD38700D8879C /* AppDelegate.swift in Sources */,
 				C1536B65267CDFCD00D8879C /* WGNetWorkTool.swift in Sources */,
 				C1536B4F267CD56900D8879C /* METools.swift in Sources */,
+				9CEC4BBD2680628F00D08443 /* WGBodyPointInfoModel.swift in Sources */,
+				C19AAB16268239660064D8CC /* YYBaseTool.swift in Sources */,
+				9CEC4BA62680541200D08443 /* WGFileTool.swift in Sources */,
+				9CEC4BA12680526000D08443 /* WGBaseDataModel.swift in Sources */,
 				C1536B6C267CE64100D8879C /* WGImageTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,7 +589,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Posture/Posture-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -583,7 +611,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Posture/Posture-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
