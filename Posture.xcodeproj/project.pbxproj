@@ -28,6 +28,8 @@
 		C1536B71267CE87B00D8879C /* demo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C1536B70267CE87B00D8879C /* demo.jpeg */; };
 		C1536B76267CFADD00D8879C /* demo1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C1536B75267CFADD00D8879C /* demo1.jpeg */; };
 		C19AAB16268239660064D8CC /* YYBaseTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB15268239660064D8CC /* YYBaseTool.swift */; };
+		C19AAB2F26837FC80064D8CC /* WGCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB2E26837FC80064D8CC /* WGCameraViewController.swift */; };
+		C19AAB3426837FF70064D8CC /* WGCameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB3326837FF70064D8CC /* WGCameraOverlayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		C1536B70267CE87B00D8879C /* demo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo.jpeg; sourceTree = "<group>"; };
 		C1536B75267CFADD00D8879C /* demo1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo1.jpeg; sourceTree = "<group>"; };
 		C19AAB15268239660064D8CC /* YYBaseTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYBaseTool.swift; sourceTree = "<group>"; };
+		C19AAB2E26837FC80064D8CC /* WGCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGCameraViewController.swift; sourceTree = "<group>"; };
+		C19AAB3326837FF70064D8CC /* WGCameraOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGCameraOverlayView.swift; sourceTree = "<group>"; };
 		F082C966D74F873A9E38087D /* Pods-Posture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Posture.debug.xcconfig"; path = "Target Support Files/Pods-Posture/Pods-Posture.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +172,8 @@
 				C1536AF2267CD38700D8879C /* AppDelegate.swift */,
 				C1536AF6267CD38700D8879C /* ViewController.swift */,
 				C1536B56267CD63800D8879C /* WGHomeViewController.swift */,
+				C19AAB2E26837FC80064D8CC /* WGCameraViewController.swift */,
+				C19AAB3326837FF70064D8CC /* WGCameraOverlayView.swift */,
 				C1536B75267CFADD00D8879C /* demo1.jpeg */,
 				C1536B70267CE87B00D8879C /* demo.jpeg */,
 				9CEC4BB8268057AF00D08443 /* Tools */,
@@ -387,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C19AAB3426837FF70064D8CC /* WGCameraOverlayView.swift in Sources */,
 				C1536B44267CD50600D8879C /* WGBaseViewController.swift in Sources */,
 				9CEC4B9C2680521500D08443 /* WGResourceCacheTool.swift in Sources */,
 				C1536AF7267CD38700D8879C /* ViewController.swift in Sources */,
@@ -400,6 +407,7 @@
 				9CEC4BA62680541200D08443 /* WGFileTool.swift in Sources */,
 				9CEC4BA12680526000D08443 /* WGBaseDataModel.swift in Sources */,
 				C1536B6C267CE64100D8879C /* WGImageTool.m in Sources */,
+				C19AAB2F26837FC80064D8CC /* WGCameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,13 +586,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3BZLVLY7AK;
 				INFOPLIST_FILE = Posture/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = WoGua.Posture;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lentor.salesman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Posture/Posture-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -601,13 +610,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3BZLVLY7AK;
 				INFOPLIST_FILE = Posture/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = WoGua.Posture;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lentor.salesman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Posture/Posture-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

@@ -15,6 +15,7 @@ class WGHomeViewController: WGBaseViewController {
 
         // Do any additional setup after loading the view.
         self.setUpUI()
+        
     }
     
     private func setUpUI() {
@@ -36,9 +37,14 @@ class WGHomeViewController: WGBaseViewController {
         }
         
         self.resultImageView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
+            make.left.equalToSuperview()
             make.top.equalToSuperview().offset(SafeTopHeight)
-            make.width.equalTo(250*ScreenScale)
+            make.width.equalTo(180*ScreenScale)
+        }
+        self.slideImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.resultImageView.snp_right).offset(5)
+            make.top.equalToSuperview().offset(SafeTopHeight)
+            make.width.equalTo(180*ScreenScale)
         }
         
         self.testBtn.snp.makeConstraints { (make) in
@@ -87,7 +93,14 @@ class WGHomeViewController: WGBaseViewController {
     }()
 
     @objc func testAction() {
-        WGNetWorkTool.getBaiduAccesstToekn()
+        ME_GetAudioPermission { (success, first) in
+            if success {
+                let cameraVC = WGCameraViewController.init()
+                self.present(cameraVC, animated: false, completion: nil)
+//                self.navigationController?.pushViewController(cameraVC, animated: true)
+            }
+        }
+//        WGNetWorkTool.getBaiduAccesstToekn()
     }
     @objc func historyAction() {
         let reultImage = UIImage.init(named: "demo.jpeg")
@@ -107,10 +120,32 @@ class WGHomeViewController: WGBaseViewController {
         }
     }
     @objc func spineCheckAction() {
+        print("侧身")
+        let reultImage = UIImage.init(named: "demo1.jpeg")
+        guard let image = reultImage?.zs_fixedImageToUpOrientation() else {
+            return
+        }
+        WGImageTool.compressedImageFiles(image) { (data) in
+            if let image = UIImage.init(data: data) {
+                WGNetWorkTool.updateImage(image: image) { (success, infoModel) in
+                    if success, let infoModel = infoModel {
+                        let saveImage = WGNetWorkTool.drawPointInfo(info: infoModel.person_info[0].body_parts!, isFront: false, resultImage: image)
+                        self.slideImageView.image = saveImage
+                    }
+                }
+            }
+
+        }
         wg_getCurrentTime()
     }
     
     lazy var resultImageView: UIImageView = {
+        let imageView = UIImageView.init(frame: .zero)
+        self.view.addSubview(imageView)
+        return imageView
+    }()
+    
+    lazy var slideImageView: UIImageView = {
         let imageView = UIImageView.init(frame: .zero)
         self.view.addSubview(imageView)
         return imageView

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 let baiduSecretKey = "taPC1VFklyKeGbGBB6N9cwLuUx1I342u"
 let baiduAppID = "24398069"
@@ -43,6 +44,27 @@ func wg_getImageFromView(view:UIView) ->UIImage{
     UIGraphicsEndImageContext()
     return image!
 
+}
+
+// 获取麦克风权限
+// auth：权限状态-1成功-0失败
+// isFirst: 是否是首次获取
+func ME_GetAudioPermission(handle: ((_ auth: Bool,_ isFirst: Bool) -> Void)?) {
+    
+    var isFirst: Bool = false
+    let audioStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+    switch audioStatus {
+    case .notDetermined:
+        isFirst = true
+        print("首次获取")
+    default:
+        break
+    }
+    AVCaptureDevice.requestAccess(for: AVMediaType.video) { (success) in
+        DispatchQueue.main.async {
+            handle?(success, isFirst)
+        }
+    }
 }
 
 

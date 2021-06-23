@@ -13,6 +13,7 @@ class WGBodyPointInfoModel: WGBaseDataModel {
     var log_id: String = ""                     // 唯一的log id，用于问题定位
     var person_info: [WGPersonInfoModel] = []   // 人的关键点信息
     var person_num: NSInteger = 0               // 识别人的数量
+    var isFront: Bool = true                    // 正面照
     
     class func modelContainerPropertyGenericClass() -> [String: Any]? {
         return ["person_info": [WGPersonInfoModel.classForCoder()]]
@@ -75,6 +76,11 @@ class WGBodyPartsInfoModel: WGBaseDataModel {
     // 左/右脚踝
     var left_ankle: WGPointInfoModel = WGPointInfoModel.init()
     var right_ankle: WGPointInfoModel = WGPointInfoModel.init()
+    
+    // 侧身照是左侧还是右侧
+    var isLeftBody: Bool {
+        return left_ear.score >= right_ear.score
+    }
     
     class func modelContainerPropertyGenericClass() -> [String: Any]? {
         return ["top_head": WGPointInfoModel.classForCoder(),

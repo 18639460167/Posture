@@ -96,7 +96,9 @@ class WGNetWorkTool: NSObject {
         }
     }
     // 绘制点坐标，生成结果图
-    class func drawPointInfo(info: WGBodyPartsInfoModel, isFront: Bool, resultImage: UIImage) -> UIImage {
+    class func drawPointInfo(info: WGBodyPartsInfoModel,
+                             isFront: Bool,
+                             resultImage: UIImage) -> UIImage {
         let size = resultImage.size
         let imageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: size.width, height: size.height))
         imageView.image = resultImage
@@ -140,36 +142,48 @@ class WGNetWorkTool: NSObject {
         
         let pointShapeLayer = CAShapeLayer.init()
         pointShapeLayer.fillColor = UIColor.clear.cgColor
-        pointShapeLayer.strokeColor = UIColor.red.cgColor
-        pointShapeLayer.lineWidth = 1.0
+        pointShapeLayer.strokeColor = UIColor.init(hexString: "#E33938").cgColor
+        pointShapeLayer.lineWidth = 1.5
         
         let mupath = CGMutablePath.init()
         let eyePath = UIBezierPath.init()
         eyePath.move(to: leftEyePoint)
         eyePath.addLine(to: rightEyePoint)
-        mupath.addPath(eyePath.cgPath)
         
         let shoulderPath = UIBezierPath.init()
         shoulderPath.move(to: leftShoulderPoint)
         shoulderPath.addLine(to: rightShoulderPoint)
-        mupath.addPath(shoulderPath.cgPath)
         
         let hipPath = UIBezierPath.init()
         hipPath.move(to: leftHipPoint)
         hipPath.addLine(to: rightHipPoint)
-        mupath.addPath(hipPath.cgPath)
         
         let kneePath = UIBezierPath.init()
         kneePath.move(to: leftKneePoint)
         kneePath.addLine(to: rightKneePoint)
-        mupath.addPath(kneePath.cgPath)
         // Ankle
         let anklePath = UIBezierPath.init()
         anklePath.move(to: leftAnklePoint)
         anklePath.addLine(to: rightAnklePoint)
-        mupath.addPath(anklePath.cgPath)
+       
+        if isFront {
+            mupath.addPath(eyePath.cgPath)
+            mupath.addPath(shoulderPath.cgPath)
+            mupath.addPath(hipPath.cgPath)
+            mupath.addPath(kneePath.cgPath)
+            mupath.addPath(anklePath.cgPath)
+        }
         
-        let centerPoints: [CGPoint] = [eyeCenterPoint, nosePoint, shoulderCenterPoint, hipCenterPoint, kneeCenterPoint, ankleCenterPoint]
+        var centerPoints: [CGPoint] = [eyeCenterPoint, nosePoint, shoulderCenterPoint, hipCenterPoint, kneeCenterPoint, ankleCenterPoint]
+        if isFront == false {
+            if info.isLeftBody {
+                let letftEarPont = CGPoint.init(x: info.left_ear.x, y: info.left_ear.y)
+                centerPoints = [letftEarPont, leftShoulderPoint, leftHipPoint, leftKneePoint, leftAnklePoint]
+            } else {
+                let rightEarPont = CGPoint.init(x: info.right_ear.x, y: info.right_ear.y)
+                centerPoints = [rightEarPont, rightShoulderPoint, rightHipPoint, rightKneePoint, rightAnklePoint]
+            }
+        }
         let centerPath = UIBezierPath.init()
         for (index, point) in centerPoints.enumerated() {
             if index == 0 {
@@ -181,20 +195,20 @@ class WGNetWorkTool: NSObject {
         mupath.addPath(centerPath.cgPath)
         
         pointShapeLayer.path = mupath
-        
         imageView.layer.addSublayer(pointShapeLayer)
         
-        let circlePoints: [CGPoint] = [leftEyePoint, rightEyePoint, nosePoint, leftShoulderPoint, rightShoulderPoint, leftHipPoint, rightHipPoint, leftKneePoint, rightKneePoint, leftAnklePoint, rightAnklePoint]
+        var circlePoints: [CGPoint] = [leftEyePoint, rightEyePoint, nosePoint, leftShoulderPoint, rightShoulderPoint, leftHipPoint, rightHipPoint, leftKneePoint, rightKneePoint, leftAnklePoint, rightAnklePoint]
+        if isFront == false {
+            circlePoints = centerPoints
+        }
         for point in circlePoints {
-            let circleVIew = UIView.init(frame: .zero)
-            circleVIew.bounds = CGRect.init(x: 0, y: 0, width: 10, height: 10)
-            circleVIew.layer.cornerRadius = 5
+            let circleVIew = UIImageView.init(frame: .zero)
+            circleVIew.image = UIImage.init(named: "point_circle")
+            circleVIew.bounds = CGRect.init(x: 0, y: 0, width: 12, height: 12)
             circleVIew.center = point
-            circleVIew.backgroundColor = UIColor.orange
             imageView.addSubview(circleVIew)
         }
         
-//        UIApplication.shared.keyWindow?.addSubview(imageView)
         let pointResultImage = wg_getImageFromView(view: imageView)
         return pointResultImage
     }
