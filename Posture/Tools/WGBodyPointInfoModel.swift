@@ -106,6 +106,75 @@ class WGBodyPartsInfoModel: WGBaseDataModel {
                 "right_ankle": WGPointInfoModel.classForCoder()]
     }
     
+    // 获取中心点
+    func getBodyCenter(size: CGSize, isFront: Bool = false) -> UIView {
+        let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: size.width, height: size.height))
+        let point1: CGPoint = CGPoint.init(x: self.left_ankle.x, y: self.left_ankle.y)
+        let point2: CGPoint = CGPoint.init(x: self.right_ankle.x, y: self.right_ankle.y)
+        let centerX = (point2.x+point1.x)/2.0
+        let centerY = (point2.y+point1.y)/2.0
+        let solpe = (point2.y-point1.y)/(point2.x-point1.x)
+        var startPointX: CGFloat = centerX
+        var startPointY: CGFloat = 0
+        var endPointX: CGFloat = centerX
+        var endPointY: CGFloat = size.height
+        var startPoint = CGPoint.init(x: startPointX, y: startPointY)
+        var endPoint = CGPoint.init(x: endPointX, y: endPointY)
+        
+        let pointShapeLayer = CAShapeLayer.init()
+        pointShapeLayer.fillColor = UIColor.clear.cgColor
+        pointShapeLayer.strokeColor = UIColor.init(hexString: "#6FE36F").cgColor
+        pointShapeLayer.lineWidth = 4.0
+        if point1.y != point2.y, isFront {
+            // 逆时针旋转
+            let maxWidth: CGFloat = hypot(size.width, size.height)
+            let viewWidth = maxWidth*2.0
+            let centerView = UIView.init(frame: .zero)
+            centerView.bounds = CGRect.init(x: 0, y: 0, width: viewWidth, height: viewWidth)
+            centerView.center = CGPoint.init(x: centerX, y: centerY)
+            centerView.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+            view.addSubview(centerView)
+            
+                //
+            startPointX = maxWidth+centerX
+            startPointY = (startPointX-centerX)*solpe+centerY
+            endPointX = centerX-maxWidth
+            endPointY = (endPointX-centerX)*solpe+centerY
+            startPoint = CGPoint.init(x: startPointX, y: startPointY)
+            endPoint = CGPoint.init(x: endPointX, y: endPointY)
+            
+            startPoint = CGPoint.init(x: centerView.bounds.width, y: 0)
+            endPoint = CGPoint.init(x: 0, y: centerView.bounds.height)
+            var angle = .pi/2.0
+            if point1.y < point2.y {
+                angle = -.pi/2.0
+            }
+            let centerPath = UIBezierPath.init()
+            centerPath.move(to: startPoint)
+            centerPath.addLine(to: endPoint)
+            pointShapeLayer.path = centerPath.cgPath
+            centerView.layer.addSublayer(pointShapeLayer)
+            centerView.transform = .init(rotationAngle: CGFloat(angle))
+        } else {
+            if isFront == false {
+                if self.isLeftBody {
+                    startPoint = CGPoint.init(x: self.left_ankle.x, y: 0)
+                    endPoint = CGPoint.init(x: self.left_ankle.x, y: size.height)
+                } else {
+                    startPoint = CGPoint.init(x: self.right_ankle.x, y: 0)
+                    endPoint = CGPoint.init(x: self.right_ankle.x, y: size.height)
+                }
+            }
+            let centerPath = UIBezierPath.init()
+            centerPath.move(to: startPoint)
+            centerPath.addLine(to: endPoint)
+            pointShapeLayer.path = centerPath.cgPath
+            view.layer.addSublayer(pointShapeLayer)
+        }
+        
+        return view
+        
+    }
     
 }
 

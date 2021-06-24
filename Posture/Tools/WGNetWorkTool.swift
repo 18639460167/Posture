@@ -14,7 +14,13 @@ let baiduBodyAnalysisUrl = "https://aip.baidubce.com/rest/2.0/image-classify/v1/
 let User_access_token = "User_access_token"
 class WGNetWorkTool: NSObject {
 
-    class func getBaiduAccesstToekn() {
+    static let shareTool: WGNetWorkTool = WGNetWorkTool.init()
+    var tokenID: String = ""    // 百度TOkenID
+    class func getBaiduAccesstToekn(handle: ((String?) -> Void)?) {
+        if self.shareTool.tokenID.count > 0 {
+            handle?(self.shareTool.tokenID)
+            return
+        }
         let params = [
             "grant_type": "client_credentials",
             "client_id": baiduAPIKey,
@@ -25,63 +31,74 @@ class WGNetWorkTool: NSObject {
                 switch response.result {
                 case .success(let json):
                     let dict = json as! Dictionary<String,AnyObject>
-                    let accessToken = dict["access_token"]
-                    UserDefaults.standard.setValue(accessToken, forKey: User_access_token)
-                    UserDefaults.standard.synchronize()
-                    print("accessTOken:\(accessToken)")
+                    if let accessToken = dict["access_token"] as? String {
+                        self.shareTool.tokenID = accessToken
+                        print("accessTOken:\(accessToken)")
+                        handle?(accessToken)
+                    } else {
+                        handle?(nil)
+                    }
                     break
                 case .failure(let error):
+                    handle?(nil)
                     print("请求错误:\(error)")
                 }
             }
     }
     
     class func updateImage(image: UIImage, handle: ((Bool, WGBodyPointInfoModel?) -> Void)?) {
-        let size = image.size
-        if size.width < 50 || size.height < 50 {
-            return
-        }
-        let token = (UserDefaults.standard.value(forKey: User_access_token) as? String) ?? ""
-        let data = image.jpegData(compressionQuality: 1.0)
-        let encodedImageStr = data?.base64EncodedString() ?? ""
-        let url = baiduBodyAnalysisUrl + "?access_token=\(token)"
-        print("url:(\(url)")
-        let params = [
-            "image": encodedImageStr
-        ]
-        Alamofire.request(url, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: ["Content-Type": "application/x-www-form-urlencoded"]).validate()
-            .responseJSON { (response) in
-                switch response.result {
-                case .success(let json):
-                    print("accessTOken:\(json)")
-                    guard let jsonData = WGBodyPointInfoModel.yy_model(withJSON: response.data as Any) else {
-                        print("解析失败了=====")
-                        DispatchQueue.main.async {
-                            handle?(false, nil)
-                        }
-                        return
-                    }
-                    if let info = json as? [String: Any] {
-                        if let array = info["person_info"] as? NSArray {
-                            if let infoArray = NSArray.yy_modelArray(with: WGPersonInfoModel.classForCoder(), json: array) as? [WGPersonInfoModel] {
-                                print("=====:\(infoArray)")
-                                jsonData.person_info = infoArray
+        self.getBaiduAccesstToekn { (token) in
+            if let accessToken = token {
+                let size = image.size
+                if size.width < 50 || size.height < 50 {
+                    return
+                }
+                let data = image.jpegData(compressionQuality: 1.0)
+                let encodedImageStr = data?.base64EncodedString() ?? ""
+                let url = baiduBodyAnalysisUrl + "?access_token=\(accessToken)"
+                print("url:(\(url)")
+                let params = [
+                    "image": encodedImageStr
+                ]
+                Alamofire.request(url, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: ["Content-Type": "application/x-www-form-urlencoded"]).validate()
+                    .responseJSON { (response) in
+                        switch response.result {
+                        case .success(let json):
+                            print("accessTOken:\(json)")
+                            guard let jsonData = WGBodyPointInfoModel.yy_model(withJSON: response.data as Any) else {
+                                print("解析失败了=====")
+                                DispatchQueue.main.async {
+                                    handle?(false, nil)
+                                }
+                                return
                             }
+                            if let info = json as? [String: Any] {
+                                if let array = info["person_info"] as? NSArray {
+                                    if let infoArray = NSArray.yy_modelArray(with: WGPersonInfoModel.classForCoder(), json: array) as? [WGPersonInfoModel] {
+                                        print("=====:\(infoArray)")
+                                        jsonData.person_info = infoArray
+                                    }
+                                }
+                                
+                            }
+                            print("jsonData:\(jsonData), info:\(jsonData.person_info)")
+                            DispatchQueue.main.async {
+                                handle?(true, jsonData)
+                            }
+                            break
+                        case .failure(let error):
+                            DispatchQueue.main.async {
+                                handle?(false, nil)
+                            }
+                            print("请求错误:\(error)")
                         }
-                        
                     }
-                    print("jsonData:\(jsonData), info:\(jsonData.person_info)")
-                    DispatchQueue.main.async {
-                        handle?(true, jsonData)
-                    }
-                    break
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        handle?(false, nil)
-                    }
-                    print("请求错误:\(error)")
+            } else {
+                DispatchQueue.main.async {
+                    handle?(false, nil)
                 }
             }
+        }
     }
     
     /// 获取网络状态
@@ -209,6 +226,13 @@ class WGNetWorkTool: NSObject {
             imageView.addSubview(circleVIew)
         }
         
+        let centerLayer = info.getBodyCenter(size: imageView.bounds.size, isFront: isFront)
+        centerLayer.backgroundColor = UIColor.orange.withAlphaComponent(0.3)
+        
+        imageView.addSubview(centerLayer)
+//        imageView.layer.addSublayer(centerLayer)
+        
+        UIApplication.shared.keyWindow?.addSubview(imageView)
         let pointResultImage = wg_getImageFromView(view: imageView)
         return pointResultImage
     }

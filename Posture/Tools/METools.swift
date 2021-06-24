@@ -15,6 +15,9 @@ let baiduAppID = "24398069"
 let baiduAPIKey = "O1cYshURsxB6Fh3I7BgbvqGw"
 // 
 
+// 保存成功
+let SaveSuccessNotifiName = Notification.Name(rawValue: "SaveSuccessNotifi")
+
 public let ScreenWidth: CGFloat = UIScreen.main.bounds.width
 public let ScreenHeight: CGFloat = UIScreen.main.bounds.height
 public let ScreenScale: CGFloat = ScreenWidth/375.0
@@ -26,14 +29,34 @@ public let SafeBottomHeight: CGFloat = SafeAreaInsets.bottom
 let wordKean: CGFloat = 2.0     // 字间距
 let lineHeight: CGFloat = 3.0   // 行间距
 
+let dayTimeInfos: [String: String] = [
+    "1": "st", "2": "nd","3": "rd","4": "th","6": "th",
+    "7": "th","8": "th","9": "th","10": "th","11": "th","12": "th",
+    "13": "th","14": "th","15": "th","16": "th","17": "th","18": "th",
+    "19": "th","20": "th","21": "st","22": "nd","23": "rd","24": "th",
+    "25": "th","26": "th","27": "th","28": "th","29": "th","30": "th","31": "st"
+]
+
 // 获取啊当前时间戳
-func wg_getCurrentTime() -> String {
+func wg_getCurrentTime() -> (String,[String]) {
     let date = NSDate.init(timeIntervalSinceNow: 0)
     let a = date.timeIntervalSince1970
     let b = Int(a)
+    let formatter = DateFormatter.init()
+    formatter.dateFormat = "MMMM-d-aa-yyyy"
+    let dateMessage = formatter.string(from: date as Date)
+    
+    var splitedArray = dateMessage.components(separatedBy: "-")
+    if splitedArray.count > 2 {
+        if let day = dayTimeInfos[splitedArray[1]] {
+            splitedArray[2] = day
+        }
+    }
+    print("spliearray:\(splitedArray)")
+    print("dateMessage:\(dateMessage)")
     let str = "\(b)"
     print("当前时间:\(str)")
-    return str
+    return (str, splitedArray)
 }
 
 // view转image
@@ -63,6 +86,15 @@ func ME_GetAudioPermission(handle: ((_ auth: Bool,_ isFirst: Bool) -> Void)?) {
     AVCaptureDevice.requestAccess(for: AVMediaType.video) { (success) in
         DispatchQueue.main.async {
             handle?(success, isFirst)
+        }
+    }
+}
+
+// 跳转权限设置页
+func ME_OpenSystemSetting() {
+    if let url = URL.init(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+        UIApplication.shared.open(url, options: [:]) { (success) in
+            
         }
     }
 }

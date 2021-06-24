@@ -10,6 +10,8 @@ import UIKit
 import YYModel
 import YYCache
 
+let frontImgName: String = "front.png"
+let sideImgName: String = "side.png"
 class WGResourceCacheTool: NSObject {
     private let resourceCacheKey: String = "wg_cacheResourceKey"
     private var cache = YYCache.init(path: wg_documentPath().me_appendingPath(path: "DownLoadCache"))
@@ -41,38 +43,46 @@ class WGResourceCacheTool: NSObject {
 }
 
 @objcMembers
-class WGCacheModel: NSObject {
+class WGCacheModel: WGBaseDataModel {
     var filePath: String = ""       // 文件缓存路径
     var createTime: String = ""     // 保存时间
     var maxIndex: NSInteger = 0     // 最新保存图的索引
-    var saveImages: [WGCahceImageModel] = []  // 保存的图片信息
     var identifier: String = ""     // 唯一辨识(时间戳)
     
+    var timeInfo: [String] = []     // 分割的时间信息
+    var frontPartsInfo: WGBodyPartsInfoModel?    // 信息
+    var sidePartsInfo: WGBodyPartsInfoModel?    // 侧身信息
+    
     // 最新保存图的名字
-    private var newImageName: String {
-        return "saveImage" + "\(self.maxIndex)"
+    func floderPath() -> String {
+        return FileManager.cacheResultRootPath().me_appendingPath(path: filePath)
     }
     
-    @objc class func modelContainerPropertyGenericClass() -> [String: Any]? {
-        return ["saveImages": [WGCahceImageModel.classForCoder()]]
-    }
-    
-    func saveResultInfo() {
+    // 保存图片
+    func saveImages(frontImage: UIImage,
+                    sideImage: UIImage,
+                    handel:(() -> Void)?) {
         DispatchQueue.global().async {
-            for imgInfo in self.saveImages {
-                if !FileManager.default.fileExists(atPath: imgInfo.imagePath) {
-                    
-                }
+            let time = wg_getCurrentTime().0
+            let timeInfos = wg_getCurrentTime().1
+            self.createTime = time
+            self.identifier = time
+            self.filePath = "img_\(time)"
+            self.timeInfo = timeInfos
+            FileManager.wg_createDirectory(self.floderPath())
+            FileManager.wg_createDirectory(self.floderPath())
+            FileManager.saveImage(to: self.floderPath().me_appendingPath(path: frontImgName), UIImage.init(named: "demo"))
+            FileManager.saveImage(to: self.floderPath().me_appendingPath(path: sideImgName), UIImage.init(named: "demo1"))
+            WGResourceCacheTool.sharedInstance.addOrUpdateDownLoadCache(self)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: SaveSuccessNotifiName, object: nil)
+                handel?()
             }
         }
     }
-}
-
-@objcMembers
-class WGCahceImageModel: NSObject {
-    var imageName: String = ""    // 保存的图片名
-    var saveTime: String = ""     // 保存时间
-    var imagePath: String {
-        return "image_" + saveTime
+    
+    @objc class func modelContainerPropertyGenericClass() -> [String: Any]? {
+        return ["partsInfo": WGBodyPartsInfoModel.classForCoder(),
+                "sidePartsInfo": WGBodyPartsInfoModel.classForCoder()]
     }
 }

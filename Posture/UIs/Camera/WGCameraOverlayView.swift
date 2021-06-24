@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol WGCameraOverlayDelegate: AnyObject {
+    // 是否是正身
+    func changeDirection(front: Bool)
+}
 class WGCameraOverlayView: UIView {
 
+    weak var delegate: WGCameraOverlayDelegate?
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setUpUI()
@@ -115,6 +120,17 @@ class WGCameraOverlayView: UIView {
         }
         return btn
     }()
+    
+    @objc func changeDirection(btn: UIButton) {
+        if btn == self.sideBtn {
+            btn.isSelected = true
+            self.sideBtn.isSelected = false
+        } else {
+            btn.isSelected = true
+            self.frontBtn.isSelected = false
+        }
+        self.delegate?.changeDirection(front: btn == self.sideBtn)
+    }
 
 }
 
@@ -126,6 +142,7 @@ class WGActionBtn: UIButton {
     }
     var cameraFinish: Bool = false {
         didSet {
+            self.isEnabled = !cameraFinish
             self.messageLbl.snp_remakeConstraints({ (make) in
                 if cameraFinish {
                     make.right.equalToSuperview()

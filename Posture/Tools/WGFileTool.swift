@@ -58,6 +58,9 @@ extension FileManager {
     public class func saveImage(to toPath: String, _ image: UIImage?)  {
         print("saveImage :\(toPath)")
         do {
+            if FileManager.default.fileExists(atPath: toPath) {
+               try? FileManager.default.removeItem(atPath: toPath)
+            }
             if image != nil {
                 let url = URL(fileURLWithPath: toPath)
                 try image?.pngData()?.write(to:url)

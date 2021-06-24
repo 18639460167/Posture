@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		25B8A2D2018513D9D878AA53 /* Pods_Posture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A2B15F9F4D1CA7C4088CCF /* Pods_Posture.framework */; };
+		9CB98F0E268469FF00C681DB /* WGCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98F0C268469FF00C681DB /* WGCameraVC.swift */; };
+		9CB98F0F268469FF00C681DB /* WGCameraEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98F0D268469FF00C681DB /* WGCameraEngine.swift */; };
 		9CEC4B9C2680521500D08443 /* WGResourceCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC4B9B2680521500D08443 /* WGResourceCacheTool.swift */; };
 		9CEC4BA12680526000D08443 /* WGBaseDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC4BA02680526000D08443 /* WGBaseDataModel.swift */; };
 		9CEC4BA62680541200D08443 /* WGFileTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC4BA52680541200D08443 /* WGFileTool.swift */; };
@@ -30,6 +32,11 @@
 		C19AAB16268239660064D8CC /* YYBaseTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB15268239660064D8CC /* YYBaseTool.swift */; };
 		C19AAB2F26837FC80064D8CC /* WGCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB2E26837FC80064D8CC /* WGCameraViewController.swift */; };
 		C19AAB3426837FF70064D8CC /* WGCameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB3326837FF70064D8CC /* WGCameraOverlayView.swift */; };
+		C19AAB4B2684D0720064D8CC /* MECommonAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB4A2684D0720064D8CC /* MECommonAlertView.swift */; };
+		C19AAB502684D6790064D8CC /* WGHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB4F2684D6790064D8CC /* WGHistoryViewController.swift */; };
+		C19AAB562684D9450064D8CC /* WGHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB552684D9450064D8CC /* WGHistoryCollectionViewCell.swift */; };
+		C19AAB5E2684EBBB0064D8CC /* WGResultDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB5D2684EBBB0064D8CC /* WGResultDetailVC.swift */; };
+		C19AAB632684ED950064D8CC /* WGImageBrowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB622684ED950064D8CC /* WGImageBrowerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +59,8 @@
 /* Begin PBXFileReference section */
 		0EC3D93AE737F746C267FD34 /* Pods-Posture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Posture.release.xcconfig"; path = "Target Support Files/Pods-Posture/Pods-Posture.release.xcconfig"; sourceTree = "<group>"; };
 		17A2B15F9F4D1CA7C4088CCF /* Pods_Posture.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Posture.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CB98F0C268469FF00C681DB /* WGCameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGCameraVC.swift; sourceTree = "<group>"; };
+		9CB98F0D268469FF00C681DB /* WGCameraEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGCameraEngine.swift; sourceTree = "<group>"; };
 		9CEC4B9B2680521500D08443 /* WGResourceCacheTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGResourceCacheTool.swift; sourceTree = "<group>"; };
 		9CEC4BA02680526000D08443 /* WGBaseDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGBaseDataModel.swift; sourceTree = "<group>"; };
 		9CEC4BA52680541200D08443 /* WGFileTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGFileTool.swift; sourceTree = "<group>"; };
@@ -82,6 +91,11 @@
 		C19AAB15268239660064D8CC /* YYBaseTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYBaseTool.swift; sourceTree = "<group>"; };
 		C19AAB2E26837FC80064D8CC /* WGCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGCameraViewController.swift; sourceTree = "<group>"; };
 		C19AAB3326837FF70064D8CC /* WGCameraOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGCameraOverlayView.swift; sourceTree = "<group>"; };
+		C19AAB4A2684D0720064D8CC /* MECommonAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MECommonAlertView.swift; sourceTree = "<group>"; };
+		C19AAB4F2684D6790064D8CC /* WGHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGHistoryViewController.swift; sourceTree = "<group>"; };
+		C19AAB552684D9450064D8CC /* WGHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		C19AAB5D2684EBBB0064D8CC /* WGResultDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGResultDetailVC.swift; sourceTree = "<group>"; };
+		C19AAB622684ED950064D8CC /* WGImageBrowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGImageBrowerView.swift; sourceTree = "<group>"; };
 		F082C966D74F873A9E38087D /* Pods-Posture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Posture.debug.xcconfig"; path = "Target Support Files/Pods-Posture/Pods-Posture.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -120,9 +134,33 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		9C79E79426844668006BEC5A /* UIs */ = {
+			isa = PBXGroup;
+			children = (
+				C19AAB542684D92F0064D8CC /* View */,
+				9C79E79E26844670006BEC5A /* Camera */,
+				C1536B56267CD63800D8879C /* WGHomeViewController.swift */,
+				C19AAB4F2684D6790064D8CC /* WGHistoryViewController.swift */,
+				C19AAB5D2684EBBB0064D8CC /* WGResultDetailVC.swift */,
+			);
+			path = UIs;
+			sourceTree = "<group>";
+		};
+		9C79E79E26844670006BEC5A /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				C19AAB3326837FF70064D8CC /* WGCameraOverlayView.swift */,
+				C19AAB2E26837FC80064D8CC /* WGCameraViewController.swift */,
+				9CB98F0D268469FF00C681DB /* WGCameraEngine.swift */,
+				9CB98F0C268469FF00C681DB /* WGCameraVC.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 		9CEC4BB8268057AF00D08443 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				C19AAB4A2684D0720064D8CC /* MECommonAlertView.swift */,
 				C1536B4E267CD56900D8879C /* METools.swift */,
 				C19AAB15268239660064D8CC /* YYBaseTool.swift */,
 				C1536B6A267CE64100D8879C /* WGImageTool.h */,
@@ -171,11 +209,9 @@
 			children = (
 				C1536AF2267CD38700D8879C /* AppDelegate.swift */,
 				C1536AF6267CD38700D8879C /* ViewController.swift */,
-				C1536B56267CD63800D8879C /* WGHomeViewController.swift */,
-				C19AAB2E26837FC80064D8CC /* WGCameraViewController.swift */,
-				C19AAB3326837FF70064D8CC /* WGCameraOverlayView.swift */,
 				C1536B75267CFADD00D8879C /* demo1.jpeg */,
 				C1536B70267CE87B00D8879C /* demo.jpeg */,
+				9C79E79426844668006BEC5A /* UIs */,
 				9CEC4BB8268057AF00D08443 /* Tools */,
 				C1536B3A267CD4D800D8879C /* CommonUI */,
 				C1536AF8267CD38700D8879C /* Main.storyboard */,
@@ -210,8 +246,17 @@
 			children = (
 				C1536B3E267CD50100D8879C /* WGBaseNavViewController.swift */,
 				C1536B43267CD50600D8879C /* WGBaseViewController.swift */,
+				C19AAB622684ED950064D8CC /* WGImageBrowerView.swift */,
 			);
 			path = CommonUI;
+			sourceTree = "<group>";
+		};
+		C19AAB542684D92F0064D8CC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C19AAB552684D9450064D8CC /* WGHistoryCollectionViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,20 +439,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				C19AAB3426837FF70064D8CC /* WGCameraOverlayView.swift in Sources */,
+				C19AAB562684D9450064D8CC /* WGHistoryCollectionViewCell.swift in Sources */,
 				C1536B44267CD50600D8879C /* WGBaseViewController.swift in Sources */,
+				C19AAB502684D6790064D8CC /* WGHistoryViewController.swift in Sources */,
 				9CEC4B9C2680521500D08443 /* WGResourceCacheTool.swift in Sources */,
 				C1536AF7267CD38700D8879C /* ViewController.swift in Sources */,
 				C1536B3F267CD50100D8879C /* WGBaseNavViewController.swift in Sources */,
+				C19AAB632684ED950064D8CC /* WGImageBrowerView.swift in Sources */,
 				C1536B57267CD63800D8879C /* WGHomeViewController.swift in Sources */,
+				9CB98F0F268469FF00C681DB /* WGCameraEngine.swift in Sources */,
 				C1536AF3267CD38700D8879C /* AppDelegate.swift in Sources */,
+				C19AAB4B2684D0720064D8CC /* MECommonAlertView.swift in Sources */,
 				C1536B65267CDFCD00D8879C /* WGNetWorkTool.swift in Sources */,
 				C1536B4F267CD56900D8879C /* METools.swift in Sources */,
 				9CEC4BBD2680628F00D08443 /* WGBodyPointInfoModel.swift in Sources */,
 				C19AAB16268239660064D8CC /* YYBaseTool.swift in Sources */,
+				9CB98F0E268469FF00C681DB /* WGCameraVC.swift in Sources */,
 				9CEC4BA62680541200D08443 /* WGFileTool.swift in Sources */,
 				9CEC4BA12680526000D08443 /* WGBaseDataModel.swift in Sources */,
 				C1536B6C267CE64100D8879C /* WGImageTool.m in Sources */,
 				C19AAB2F26837FC80064D8CC /* WGCameraViewController.swift in Sources */,
+				C19AAB5E2684EBBB0064D8CC /* WGResultDetailVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -28,6 +28,8 @@ extension UIImage {
             cropRect.size.width = originSize.height * originScale
         }
         
+        print("cropRect:\(cropRect)")
+        
         // 2.进行裁剪
         guard let cropImageRef = sourceImageRef.cropping(to: cropRect) else { return nil }
         return UIImage.init(cgImage: cropImageRef, scale: UIScreen.main.scale, orientation: .up)
