@@ -36,7 +36,9 @@
 		C19AAB502684D6790064D8CC /* WGHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB4F2684D6790064D8CC /* WGHistoryViewController.swift */; };
 		C19AAB562684D9450064D8CC /* WGHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB552684D9450064D8CC /* WGHistoryCollectionViewCell.swift */; };
 		C19AAB5E2684EBBB0064D8CC /* WGResultDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB5D2684EBBB0064D8CC /* WGResultDetailVC.swift */; };
-		C19AAB632684ED950064D8CC /* WGImageBrowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19AAB622684ED950064D8CC /* WGImageBrowerView.swift */; };
+		C19D6B482686A8CC00ED2D1F /* WGLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19D6B472686A8CC00ED2D1F /* WGLoadingView.swift */; };
+		C19D6B4D2686BA9400ED2D1F /* WGResultBrowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19D6B4C2686BA9400ED2D1F /* WGResultBrowerView.swift */; };
+		C1B8A7F72686C3BD0068FFB0 /* WGCompareResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B8A7F62686C3BD0068FFB0 /* WGCompareResultVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +97,9 @@
 		C19AAB4F2684D6790064D8CC /* WGHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGHistoryViewController.swift; sourceTree = "<group>"; };
 		C19AAB552684D9450064D8CC /* WGHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		C19AAB5D2684EBBB0064D8CC /* WGResultDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGResultDetailVC.swift; sourceTree = "<group>"; };
-		C19AAB622684ED950064D8CC /* WGImageBrowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGImageBrowerView.swift; sourceTree = "<group>"; };
+		C19D6B472686A8CC00ED2D1F /* WGLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGLoadingView.swift; sourceTree = "<group>"; };
+		C19D6B4C2686BA9400ED2D1F /* WGResultBrowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGResultBrowerView.swift; sourceTree = "<group>"; };
+		C1B8A7F62686C3BD0068FFB0 /* WGCompareResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGCompareResultVC.swift; sourceTree = "<group>"; };
 		F082C966D74F873A9E38087D /* Pods-Posture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Posture.debug.xcconfig"; path = "Target Support Files/Pods-Posture/Pods-Posture.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +146,7 @@
 				C1536B56267CD63800D8879C /* WGHomeViewController.swift */,
 				C19AAB4F2684D6790064D8CC /* WGHistoryViewController.swift */,
 				C19AAB5D2684EBBB0064D8CC /* WGResultDetailVC.swift */,
+				C1B8A7F62686C3BD0068FFB0 /* WGCompareResultVC.swift */,
 			);
 			path = UIs;
 			sourceTree = "<group>";
@@ -246,7 +251,7 @@
 			children = (
 				C1536B3E267CD50100D8879C /* WGBaseNavViewController.swift */,
 				C1536B43267CD50600D8879C /* WGBaseViewController.swift */,
-				C19AAB622684ED950064D8CC /* WGImageBrowerView.swift */,
+				C19D6B472686A8CC00ED2D1F /* WGLoadingView.swift */,
 			);
 			path = CommonUI;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				C19AAB552684D9450064D8CC /* WGHistoryCollectionViewCell.swift */,
+				C19D6B4C2686BA9400ED2D1F /* WGResultBrowerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -445,13 +451,15 @@
 				9CEC4B9C2680521500D08443 /* WGResourceCacheTool.swift in Sources */,
 				C1536AF7267CD38700D8879C /* ViewController.swift in Sources */,
 				C1536B3F267CD50100D8879C /* WGBaseNavViewController.swift in Sources */,
-				C19AAB632684ED950064D8CC /* WGImageBrowerView.swift in Sources */,
+				C1B8A7F72686C3BD0068FFB0 /* WGCompareResultVC.swift in Sources */,
 				C1536B57267CD63800D8879C /* WGHomeViewController.swift in Sources */,
 				9CB98F0F268469FF00C681DB /* WGCameraEngine.swift in Sources */,
 				C1536AF3267CD38700D8879C /* AppDelegate.swift in Sources */,
 				C19AAB4B2684D0720064D8CC /* MECommonAlertView.swift in Sources */,
+				C19D6B4D2686BA9400ED2D1F /* WGResultBrowerView.swift in Sources */,
 				C1536B65267CDFCD00D8879C /* WGNetWorkTool.swift in Sources */,
 				C1536B4F267CD56900D8879C /* METools.swift in Sources */,
+				C19D6B482686A8CC00ED2D1F /* WGLoadingView.swift in Sources */,
 				9CEC4BBD2680628F00D08443 /* WGBodyPointInfoModel.swift in Sources */,
 				C19AAB16268239660064D8CC /* YYBaseTool.swift in Sources */,
 				9CB98F0E268469FF00C681DB /* WGCameraVC.swift in Sources */,

@@ -10,8 +10,8 @@ import UIKit
 import YYModel
 import YYCache
 
-let frontImgName: String = "front.png"
-let sideImgName: String = "side.png"
+let frontImgName: String = "front.jpg"
+let sideImgName: String = "side.jpg"
 class WGResourceCacheTool: NSObject {
     private let resourceCacheKey: String = "wg_cacheResourceKey"
     private var cache = YYCache.init(path: wg_documentPath().me_appendingPath(path: "DownLoadCache"))
@@ -29,7 +29,7 @@ class WGResourceCacheTool: NSObject {
         }) {
             cacheList[index] = messageModel.copy() as! WGCacheModel
         } else {
-            cacheList.append(messageModel.copy() as! WGCacheModel)
+            cacheList.insert(messageModel.copy() as! WGCacheModel, at: 0)
         }
         self.cache?.setObject((cacheList as NSArray) as NSCoding, forKey: resourceCacheKey)
     }
@@ -70,11 +70,11 @@ class WGCacheModel: WGBaseDataModel {
             self.filePath = "img_\(time)"
             self.timeInfo = timeInfos
             FileManager.wg_createDirectory(self.floderPath())
-            FileManager.wg_createDirectory(self.floderPath())
-            FileManager.saveImage(to: self.floderPath().me_appendingPath(path: frontImgName), UIImage.init(named: "demo"))
-            FileManager.saveImage(to: self.floderPath().me_appendingPath(path: sideImgName), UIImage.init(named: "demo1"))
+
+            let _ = FileManager.saveImage(to: self.floderPath().me_appendingPath(path: frontImgName), frontImage)
+            let _ = FileManager.saveImage(to: self.floderPath().me_appendingPath(path: sideImgName), sideImage)
             WGResourceCacheTool.sharedInstance.addOrUpdateDownLoadCache(self)
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                 NotificationCenter.default.post(name: SaveSuccessNotifiName, object: nil)
                 handel?()
             }

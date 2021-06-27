@@ -27,12 +27,13 @@ extension UIImage {
             cropRect.size.height = originSize.height
             cropRect.size.width = originSize.height * originScale
         }
-        
         print("cropRect:\(cropRect)")
+        
         
         // 2.进行裁剪
         guard let cropImageRef = sourceImageRef.cropping(to: cropRect) else { return nil }
-        return UIImage.init(cgImage: cropImageRef, scale: UIScreen.main.scale, orientation: .up)
+        return UIImage.init(cgImage: cropImageRef)
+            //UIImage.init(cgImage: cropImageRef, scale: UIScreen.main.scale, orientation: .up)
         
     }
     // 图片方向纠正

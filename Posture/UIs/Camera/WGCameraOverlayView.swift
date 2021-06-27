@@ -82,14 +82,14 @@ class WGCameraOverlayView: UIView {
     lazy var bottomView: UIView = {
         let view = UIView.init(frame: .zero)
         self.addSubview(view)
-        view.backgroundColor = UIColor.orange
-//        view.backgroundColor = UIColor.init(hexString: "#293038")
+        view.backgroundColor = UIColor.init(hexString: "#293038")
         return view
     }()
     
     lazy var sideBtn: WGActionBtn = {
         let btn = WGActionBtn.init(frame: .zero)
         btn.messageLbl.text = "slide"
+        btn.addTarget(self, action: #selector(changeDirection(btn:)), for: .touchUpInside)
         self.bottomView.addSubview(btn)
         return btn
     }()
@@ -97,6 +97,7 @@ class WGCameraOverlayView: UIView {
         let btn = WGActionBtn.init(frame: .zero)
         btn.messageLbl.text = "front"
         btn.isSelected = true
+        btn.addTarget(self, action: #selector(changeDirection(btn:)), for: .touchUpInside)
         self.bottomView.addSubview(btn)
         return btn
     }()
@@ -124,12 +125,12 @@ class WGCameraOverlayView: UIView {
     @objc func changeDirection(btn: UIButton) {
         if btn == self.sideBtn {
             btn.isSelected = true
-            self.sideBtn.isSelected = false
+            self.frontBtn.isSelected = false
         } else {
             btn.isSelected = true
-            self.frontBtn.isSelected = false
+            self.sideBtn.isSelected = false
         }
-        self.delegate?.changeDirection(front: btn == self.sideBtn)
+        self.delegate?.changeDirection(front: btn == self.frontBtn)
     }
 
 }
@@ -137,12 +138,19 @@ class WGCameraOverlayView: UIView {
 class WGActionBtn: UIButton {
     override var isSelected: Bool {
         didSet {
-            self.layer.borderWidth = isSelected ? 1.0 : 0
+            if self.isSelected {
+                self.layer.borderWidth = 1.0
+            } else {
+                self.layer.borderWidth = 0
+            }
         }
     }
     var cameraFinish: Bool = false {
         didSet {
+            self.layer.borderWidth = 0
             self.isEnabled = !cameraFinish
+            self.messageLbl.textColor = cameraFinish ? UIColor.init(hexString: "#4E5158") : UIColor.white
+            self.finishImgView.isHidden = !cameraFinish
             self.messageLbl.snp_remakeConstraints({ (make) in
                 if cameraFinish {
                     make.right.equalToSuperview()
@@ -173,6 +181,7 @@ class WGActionBtn: UIButton {
         }
         self.finishImgView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
+            make.width.height.equalTo(20*ScreenScale)
             make.left.equalToSuperview()
         }
         self.messageLbl.snp.makeConstraints({ (make) in
@@ -188,14 +197,15 @@ class WGActionBtn: UIButton {
     }()
     lazy var finishImgView: UIImageView = {
         let imageView = UIImageView.init(frame: .zero)
-        imageView.image = UIImage.init(named: "")
+        imageView.image = UIImage.init(named: "camera_finish")
+        imageView.isHidden = true
         centerView.addSubview(imageView)
         return imageView
     }()
     
     lazy var messageLbl: UILabel = {
         let label = UILabel.init(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 22*ScreenScale, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 22*ScreenScale, weight: .medium)
         label.textColor = .white
         centerView.addSubview(label)
         return label

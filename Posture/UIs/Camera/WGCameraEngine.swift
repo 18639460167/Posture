@@ -126,14 +126,18 @@ class WGCameraEngine: NSObject {
                     }
                     return
                 }
+                
                 var resultImage = image.zs_fixedImageToUpOrientation()
-                let imageHeight = 486.0/341.0*resultImage.size.width
-                let rect = CGRect.init(x: 0, y: 0, width: resultImage.size.width, height: imageHeight)
-                print("裁剪旋转之后结果图:\(resultImage);\(image);rect:\(rect)")
-                resultImage = resultImage.cropImageWithArea(rect) ?? resultImage
-                print("裁剪旋转之后结果图:\(resultImage);\(image)")
-                DispatchQueue.main.async {
-                    completion?(resultImage)
+                WGImageTool.compressedImageFiles(resultImage) { (data) in
+                    resultImage = UIImage.init(data: data) ?? resultImage
+                    let imageHeight = 486.0/341.0*resultImage.size.width
+                    let rect = CGRect.init(x: 0, y: 0, width: resultImage.size.width, height: ceil(imageHeight))
+                    print("裁剪旋转之后结果图:\(resultImage);\(image);rect:\(rect)")
+                    resultImage = resultImage.cropImageWithArea(rect) ?? resultImage
+                    print("裁剪旋转之后结果图:\(resultImage);\(image)")
+                    DispatchQueue.main.async {
+                        completion?(resultImage)
+                    }
                 }
             }
         }

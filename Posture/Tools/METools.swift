@@ -53,7 +53,6 @@ func wg_getCurrentTime() -> (String,[String]) {
         }
     }
     print("spliearray:\(splitedArray)")
-    print("dateMessage:\(dateMessage)")
     let str = "\(b)"
     print("当前时间:\(str)")
     return (str, splitedArray)
@@ -358,5 +357,31 @@ extension Date {
         
         let resultCalendar = Calendar(identifier: .gregorian)
         return resultCalendar.date(from: resultComps) ?? Date()
+    }
+}
+
+extension UIViewController {
+    
+    // 进入或返回拍摄页
+    func enterCameraVC() {
+        for vc in self.navigationController?.viewControllers ?? [] {
+            if vc.isKind(of: WGCameraViewController.classForCoder()) {
+                self.navigationController?.popToViewController(vc, animated: true)
+                return
+            }
+        }
+        ME_GetAudioPermission { (success, first) in
+            if success {
+                let cameraVC = WGCameraViewController.init()
+                self.navigationController?.pushViewController(cameraVC, animated: true)
+            } else {
+                // 弹出权限
+                MECommonAlertView.showAlertView(title: "请先开启相机权限", destriciton: "需要根据您的照片进行识别", cancel: "放弃", confirm: "允许") { (tag) in
+                    if tag == 2 {
+                        ME_OpenSystemSetting()
+                    }
+                }
+            }
+        }
     }
 }

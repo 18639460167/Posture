@@ -18,13 +18,34 @@ class WGBodyPointInfoModel: WGBaseDataModel {
     class func modelContainerPropertyGenericClass() -> [String: Any]? {
         return ["person_info": [WGPersonInfoModel.classForCoder()]]
     }
+    
+    // 获取score最大的人像
+    func getMaxBodyInfo() -> WGBodyPartsInfoModel? {
+        if self.person_info.count > 0 {
+            if self.person_info.count == 1 {
+                return self.person_info[0].body_parts
+            }
+            var maxIndex = 0
+            var score: CGFloat = self.person_info[1].location?.score ?? 0;
+            for (index, info) in self.person_info.enumerated() {
+                if score < (info.location?.score ?? 0) {
+                    maxIndex = index
+                    score = info.location?.score ?? 0
+                }
+            }
+            if maxIndex < self.person_info.count {
+                return self.person_info[maxIndex].body_parts!
+            }
+        }
+        
+        return nil
+    }
 }
 
 @objcMembers
 class WGPersonInfoModel: WGBaseDataModel {
     var body_parts: WGBodyPartsInfoModel? = nil       // 关键坐标点
     var location: WGPersionLocationInfoModel? = nil  // 人在图中的位置
-    
     class func modelContainerPropertyGenericClass() -> [String: Any]? {
         return ["body_parts": WGBodyPartsInfoModel.classForCoder(),
                 "location": WGPersionLocationInfoModel.classForCoder()]
@@ -108,53 +129,59 @@ class WGBodyPartsInfoModel: WGBaseDataModel {
     
     // 获取中心点
     func getBodyCenter(size: CGSize, isFront: Bool = false) -> UIView {
+        let lineWidth: CGFloat = 5.0
         let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: size.width, height: size.height))
-        let point1: CGPoint = CGPoint.init(x: self.left_ankle.x, y: self.left_ankle.y)
-        let point2: CGPoint = CGPoint.init(x: self.right_ankle.x, y: self.right_ankle.y)
+        let point1: CGPoint = CGPoint.init(x: self.right_ankle.x, y: self.right_ankle.y)
+        let point2: CGPoint = CGPoint.init(x: self.left_ankle.x, y: self.left_ankle.y)
         let centerX = (point2.x+point1.x)/2.0
         let centerY = (point2.y+point1.y)/2.0
-        let solpe = (point2.y-point1.y)/(point2.x-point1.x)
-        var startPointX: CGFloat = centerX
-        var startPointY: CGFloat = 0
-        var endPointX: CGFloat = centerX
-        var endPointY: CGFloat = size.height
+        let startPointX: CGFloat = centerX
+        let startPointY: CGFloat = 0
+        let endPointX: CGFloat = centerX
+        let endPointY: CGFloat = size.height
         var startPoint = CGPoint.init(x: startPointX, y: startPointY)
         var endPoint = CGPoint.init(x: endPointX, y: endPointY)
         
         let pointShapeLayer = CAShapeLayer.init()
         pointShapeLayer.fillColor = UIColor.clear.cgColor
         pointShapeLayer.strokeColor = UIColor.init(hexString: "#6FE36F").cgColor
-        pointShapeLayer.lineWidth = 4.0
+        pointShapeLayer.lineWidth = lineWidth
         if point1.y != point2.y, isFront {
             // 逆时针旋转
             let maxWidth: CGFloat = hypot(size.width, size.height)
-            let viewWidth = maxWidth*2.0
-            let centerView = UIView.init(frame: .zero)
-            centerView.bounds = CGRect.init(x: 0, y: 0, width: viewWidth, height: viewWidth)
-            centerView.center = CGPoint.init(x: centerX, y: centerY)
-            centerView.backgroundColor = UIColor.red.withAlphaComponent(0.3)
-            view.addSubview(centerView)
-            
-                //
-            startPointX = maxWidth+centerX
-            startPointY = (startPointX-centerX)*solpe+centerY
-            endPointX = centerX-maxWidth
-            endPointY = (endPointX-centerX)*solpe+centerY
-            startPoint = CGPoint.init(x: startPointX, y: startPointY)
-            endPoint = CGPoint.init(x: endPointX, y: endPointY)
-            
-            startPoint = CGPoint.init(x: centerView.bounds.width, y: 0)
-            endPoint = CGPoint.init(x: 0, y: centerView.bounds.height)
-            var angle = .pi/2.0
-            if point1.y < point2.y {
-                angle = -.pi/2.0
+            // 原始宽高
+            let originWidth = CGFloat(fabsf(Float(point1.x - point2.x)))
+            let originHeight = CGFloat(fabsf(Float(point1.y - point2.y)))
+            let scale = originWidth/originHeight
+    
+            var bigWidth = maxWidth
+            var bigHeight = maxWidth
+            if originWidth > originHeight {
+                bigWidth = scale * maxWidth
+            } else {
+                bigHeight = maxWidth/scale
             }
-            let centerPath = UIBezierPath.init()
-            centerPath.move(to: startPoint)
-            centerPath.addLine(to: endPoint)
-            pointShapeLayer.path = centerPath.cgPath
-            centerView.layer.addSublayer(pointShapeLayer)
-            centerView.transform = .init(rotationAngle: CGFloat(angle))
+            let bigView = UIView.init(frame: .zero)
+            bigView.center = CGPoint.init(x: centerX, y: centerY)
+            bigView.bounds = CGRect.init(x: 0, y: 0, width: bigWidth, height: bigHeight)
+            let bigLinePath = UIBezierPath.init()
+            if point1.y < point2.y {
+                bigLinePath.move(to: CGPoint.init(x: 0, y: 0))
+                bigLinePath.addLine(to: CGPoint.init(x: bigView.bounds.width, y: bigView.bounds.height))
+            } else {
+                bigLinePath.move(to: CGPoint.init(x: 0, y: bigView.bounds.height))
+                bigLinePath.addLine(to: CGPoint.init(x: bigView.bounds.width, y: 0))
+            }
+            pointShapeLayer.path = bigLinePath.cgPath
+            bigView.layer.addSublayer(pointShapeLayer)
+            
+            // 图片旋转90实现垂直
+            let resultImage = wg_getImageFromView(view: bigView).imageRotated(on: 90)
+            let imageView = UIImageView.init(frame: .zero)
+            imageView.center = bigView.center
+            imageView.bounds = CGRect.init(x: 0, y: 0, width: bigView.bounds.height, height: bigView.bounds.width)
+            imageView.image = resultImage
+            view.addSubview(imageView)
         } else {
             if isFront == false {
                 if self.isLeftBody {
@@ -182,7 +209,7 @@ class WGBodyPartsInfoModel: WGBaseDataModel {
 class WGPointInfoModel: WGBaseDataModel {
     /**
      接口除了返回人体框和每个关键点的坐标信息外，还会输出人体框和关键点的概率分数，实际应用中可以基于概率分数进行过滤，排除掉分数低的误识别“无效人体”，推荐的过滤方案：当关键点得分大于0.2的个数大于3，且人体框的得分大于0.03时，才认为是有效人体。
-
+     
      实际应用中，可根据对误识别、漏识别的容忍程度，调整阈值过滤方案，灵活应用，比如对误识别容忍低的应用场景，人体框的得分阈值可以提到0.06甚至更高。
      */
     var score: CGFloat = 0  // 概率分数

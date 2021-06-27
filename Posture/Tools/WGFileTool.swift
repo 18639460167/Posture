@@ -55,17 +55,23 @@ extension FileManager {
     }
     
     //保存图片
-    public class func saveImage(to toPath: String, _ image: UIImage?)  {
+    public class func saveImage(to toPath: String, _ image: UIImage?) -> Bool {
         print("saveImage :\(toPath)")
         do {
-            if FileManager.default.fileExists(atPath: toPath) {
-               try? FileManager.default.removeItem(atPath: toPath)
+            if let resultImage = image {
+                if FileManager.default.fileExists(atPath: toPath) {
+                   try? FileManager.default.removeItem(atPath: toPath)
+                }
+//                let url = URL(fileURLWithPath: toPath)
+                
+                if let imageData = resultImage.jpegData(compressionQuality: 1.0) as NSData? {
+                    return imageData.write(toFile: toPath, atomically: true)
+                }
+//                try image?.pngData()?.write(to:url)
             }
-            if image != nil {
-                let url = URL(fileURLWithPath: toPath)
-                try image?.pngData()?.write(to:url)
-            }
+            return false
         } catch  {
+            return false
             print("saveImage error:\(error.localizedDescription)")
         }
     }

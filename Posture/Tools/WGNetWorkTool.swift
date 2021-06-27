@@ -66,7 +66,6 @@ class WGNetWorkTool: NSObject {
                         case .success(let json):
                             print("accessTOken:\(json)")
                             guard let jsonData = WGBodyPointInfoModel.yy_model(withJSON: response.data as Any) else {
-                                print("解析失败了=====")
                                 DispatchQueue.main.async {
                                     handle?(false, nil)
                                 }
@@ -116,6 +115,8 @@ class WGNetWorkTool: NSObject {
     class func drawPointInfo(info: WGBodyPartsInfoModel,
                              isFront: Bool,
                              resultImage: UIImage) -> UIImage {
+        let lineWidth: CGFloat = 4.0
+        let circleWidth: CGFloat = 20.0
         let size = resultImage.size
         let imageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: size.width, height: size.height))
         imageView.image = resultImage
@@ -150,7 +151,7 @@ class WGNetWorkTool: NSObject {
         let kneeCenterY = (leftKneePoint.y+rightKneePoint.y)/2.0
         let kneeCenterPoint = CGPoint.init(x: kneeCenterX, y: kneeCenterY)
         
-        //绘制膝盖
+        //绘制脚踝
         let leftAnklePoint = CGPoint.init(x: info.left_ankle.x, y: info.left_ankle.y)
         let rightAnklePoint = CGPoint.init(x: info.right_ankle.x, y: info.right_ankle.y)
         let ankleCenterX = (leftAnklePoint.x+rightAnklePoint.x)/2.0
@@ -160,7 +161,7 @@ class WGNetWorkTool: NSObject {
         let pointShapeLayer = CAShapeLayer.init()
         pointShapeLayer.fillColor = UIColor.clear.cgColor
         pointShapeLayer.strokeColor = UIColor.init(hexString: "#E33938").cgColor
-        pointShapeLayer.lineWidth = 1.5
+        pointShapeLayer.lineWidth = lineWidth
         
         let mupath = CGMutablePath.init()
         let eyePath = UIBezierPath.init()
@@ -175,23 +176,39 @@ class WGNetWorkTool: NSObject {
         hipPath.move(to: leftHipPoint)
         hipPath.addLine(to: rightHipPoint)
         
-        let kneePath = UIBezierPath.init()
-        kneePath.move(to: leftKneePoint)
-        kneePath.addLine(to: rightKneePoint)
+//        let kneePath = UIBezierPath.init()
+//        kneePath.move(to: leftKneePoint)
+//        kneePath.addLine(to: rightKneePoint)
         // Ankle
         let anklePath = UIBezierPath.init()
         anklePath.move(to: leftAnklePoint)
         anklePath.addLine(to: rightAnklePoint)
        
+        var centerPoints: [CGPoint] = []    // 中心点
+        var circlePoints: [CGPoint] = []    // 黄色圆点
         if isFront {
+            // 获取胸部中心点
+            let leftChestPointx = (leftShoulderPoint.x + leftHipPoint.x)/2.0
+            let leftChestPointY = (leftShoulderPoint.y + leftHipPoint.y)/2.0
+            let rightChestPointx = (rightShoulderPoint.x + rightHipPoint.x)/2.0
+            let rightChestPointY = (rightShoulderPoint.y + rightHipPoint.y)/2.0
+            let leftChestPoint = CGPoint.init(x: leftChestPointx, y: leftChestPointY)
+            let rightChestPoint = CGPoint.init(x: rightChestPointx, y: rightChestPointY)
+            let chestCenterPoint = CGPoint.init(x: (leftChestPointx+rightChestPointx)/2.0, y: (leftChestPointY+rightChestPointY)/2.0)
+            let chestPath = UIBezierPath.init()
+            chestPath.move(to: leftChestPoint)
+            chestPath.addLine(to: rightChestPoint)
+
+            
             mupath.addPath(eyePath.cgPath)
             mupath.addPath(shoulderPath.cgPath)
+            mupath.addPath(chestPath.cgPath)
             mupath.addPath(hipPath.cgPath)
-            mupath.addPath(kneePath.cgPath)
             mupath.addPath(anklePath.cgPath)
+            centerPoints = [eyeCenterPoint, nosePoint, shoulderCenterPoint, chestCenterPoint,hipCenterPoint, ankleCenterPoint]
+            circlePoints = [leftEyePoint, rightEyePoint, nosePoint, leftShoulderPoint, rightShoulderPoint, leftHipPoint, rightHipPoint, leftChestPoint, rightChestPoint, leftAnklePoint, rightAnklePoint]
         }
         
-        var centerPoints: [CGPoint] = [eyeCenterPoint, nosePoint, shoulderCenterPoint, hipCenterPoint, kneeCenterPoint, ankleCenterPoint]
         if isFront == false {
             if info.isLeftBody {
                 let letftEarPont = CGPoint.init(x: info.left_ear.x, y: info.left_ear.y)
@@ -214,25 +231,19 @@ class WGNetWorkTool: NSObject {
         pointShapeLayer.path = mupath
         imageView.layer.addSublayer(pointShapeLayer)
         
-        var circlePoints: [CGPoint] = [leftEyePoint, rightEyePoint, nosePoint, leftShoulderPoint, rightShoulderPoint, leftHipPoint, rightHipPoint, leftKneePoint, rightKneePoint, leftAnklePoint, rightAnklePoint]
         if isFront == false {
             circlePoints = centerPoints
         }
         for point in circlePoints {
             let circleVIew = UIImageView.init(frame: .zero)
             circleVIew.image = UIImage.init(named: "point_circle")
-            circleVIew.bounds = CGRect.init(x: 0, y: 0, width: 12, height: 12)
+            circleVIew.bounds = CGRect.init(x: 0, y: 0, width: circleWidth, height: circleWidth)
             circleVIew.center = point
             imageView.addSubview(circleVIew)
         }
         
         let centerLayer = info.getBodyCenter(size: imageView.bounds.size, isFront: isFront)
-        centerLayer.backgroundColor = UIColor.orange.withAlphaComponent(0.3)
-        
         imageView.addSubview(centerLayer)
-//        imageView.layer.addSublayer(centerLayer)
-        
-        UIApplication.shared.keyWindow?.addSubview(imageView)
         let pointResultImage = wg_getImageFromView(view: imageView)
         return pointResultImage
     }

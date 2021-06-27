@@ -14,6 +14,7 @@ def network
   # 图片加载
   pod 'SDWebImage', '5.9.1'
   pod 'YYCache', '~> 1.0.4'
+  pod 'HUPhotoBrowser'
   
   pod 'LookinServer', :configurations => ['Debug']
 end

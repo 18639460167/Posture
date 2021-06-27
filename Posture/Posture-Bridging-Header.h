@@ -4,3 +4,5 @@
 
 
 #import "WGImageTool.h"
+
+#import "HUPhotoBrowser.h"

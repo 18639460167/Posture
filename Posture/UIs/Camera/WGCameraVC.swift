@@ -11,12 +11,13 @@ import AVFoundation
 import PhotosUI
 
 class WGCameraVC: UIViewController {
-
+    
     let cameraMan = WGCameraEngine()
     var previewLayer: AVCaptureVideoPreviewLayer?
+    var camerFinish: (() -> Void)?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         cameraMan.delegate = self
@@ -24,36 +25,37 @@ class WGCameraVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-      super.viewDidAppear(animated)
-
-      previewLayer?.connection?.videoOrientation = .portrait
+        super.viewDidAppear(animated)
+        
+        previewLayer?.connection?.videoOrientation = .portrait
     }
     
     func setupPreviewLayer() {
-      let layer = AVCaptureVideoPreviewLayer(session: cameraMan.session)
-
+        let layer = AVCaptureVideoPreviewLayer(session: cameraMan.session)
+        
         layer.backgroundColor = UIColor.clear.cgColor
-      layer.autoreverses = true
-      layer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-
-      view.layer.insertSublayer(layer, at: 0)
-      layer.frame = view.layer.bounds
-      view.clipsToBounds = true
-
-      previewLayer = layer
+        layer.autoreverses = true
+        layer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        
+        view.layer.insertSublayer(layer, at: 0)
+        layer.frame = view.layer.bounds
+        view.clipsToBounds = true
+        
+        previewLayer = layer
     }
-
+    
     // 进行拍摄
     func takePicture(_ completion: @escaping (UIImage?) -> Void) {
-      guard let previewLayer = previewLayer else { return }
+        guard let previewLayer = previewLayer else { return }
         cameraMan.takePhoto(previewLayer) { (image) in
             completion(image)
         }
     }
-
+    
 }
 extension WGCameraVC: WGCameraEngineDelegate {
     func cameraManDidStart(_ cameraMan: WGCameraEngine) {
         setupPreviewLayer()
+        self.camerFinish?()
     }
 }

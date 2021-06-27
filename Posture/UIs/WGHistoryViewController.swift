@@ -11,6 +11,8 @@ import UIKit
 class WGHistoryViewController: WGBaseViewController {
 
     var cacheModels: [WGCacheModel] = []
+    var firstCacheModel: WGCacheModel = WGCacheModel.init()
+    var isResult: Bool = true   // 是否是结果详情(true是，false是对比选择)
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,8 +44,7 @@ class WGHistoryViewController: WGBaseViewController {
     
     lazy var closeBtn: UIButton = {
         let btn = UIButton.init(frame: .zero)
-        btn.setImage(UIImage.init(named: ""), for: .normal)
-        btn.backgroundColor = UIColor.red
+        btn.setImage(UIImage.init(named: "nav_back"), for: .normal)
         btn.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
         self.view.addSubview(btn)
         return btn
@@ -89,9 +90,18 @@ extension WGHistoryViewController: UICollectionViewDelegate, UICollectionViewDat
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = cacheModels[indexPath.row]
-        let resultVC = WGResultDetailVC.init()
-        resultVC.cacheModel = item
-        self.navigationController?.pushViewController(resultVC, animated: true)
+        if self.isResult {
+            let item = cacheModels[indexPath.row]
+            let resultVC = WGResultDetailVC.init()
+            resultVC.cacheModel = item
+            self.navigationController?.pushViewController(resultVC, animated: true)
+        } else {
+            let item = cacheModels[indexPath.row]
+            let resultVC = WGCompareResultVC.init()
+            resultVC.firstCacheModel = self.firstCacheModel
+            resultVC.lastCacheModel = item
+            self.navigationController?.pushViewController(resultVC, animated: true)
+        }
+        
     }
 }
