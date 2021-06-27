@@ -119,6 +119,7 @@ class WGCameraViewController: WGBaseViewController {
         label.textColor = UIColor.white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 13*ScreenScale, weight: .medium)
+        // Button lights up after adjusting the frame
         label.text = "Make sure the whole body is in the frame"
         return label
     }()
@@ -164,6 +165,8 @@ class WGCameraViewController: WGBaseViewController {
 extension WGCameraViewController: WGCameraOverlayDelegate {
     func changeDirection(front: Bool) {
         self.isFront = front
+        self.secondAlertLbl.textColor = .white
+        self.secondAlertLbl.text = front ? "Make sure the whole body is in the frame" : "Button lights up after adjusting the frame"
     }
 }
 
