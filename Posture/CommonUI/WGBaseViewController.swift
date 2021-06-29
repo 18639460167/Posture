@@ -18,7 +18,7 @@ class WGBaseViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.view.backgroundColor = UIColor.init(hexString: "#293038")
+        self.view.backgroundColor = Main_Color
     }
 
 }

@@ -21,13 +21,14 @@ class WGCameraOverlayView: UIView {
     }
     
     private func setUpUI() {
-        self.contentView.snp.makeConstraints { (make) in
-            make.left.right.top.equalToSuperview()
-            make.height.equalTo(SafeTopHeight+486*ScreenScale)
-        }
         self.bottomView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(self.contentView.snp_bottom)
+            make.height.equalTo(160*ScreenScale+SafeBottomHeight)
+        }
+        self.contentView.snp.makeConstraints { (make) in
+            make.left.right.top.equalToSuperview()
+            make.bottom.equalTo(self.bottomView.snp_top)
+//            make.height.equalTo(SafeTopHeight+486*ScreenScale)
         }
         self.sideBtn.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(18*ScreenScale)
@@ -56,21 +57,21 @@ class WGCameraOverlayView: UIView {
         
         
         let leftView = UIView.init(frame: .zero)
-        leftView.backgroundColor = UIColor.init(hexString: "#293038")
+        leftView.backgroundColor = Main_Color
         view.addSubview(leftView)
         leftView.snp.makeConstraints { (make) in
             make.left.top.bottom.equalToSuperview()
             make.width.equalTo(17*ScreenScale)
         }
         let rightView = UIView.init(frame: .zero)
-        rightView.backgroundColor = UIColor.init(hexString: "#293038")
+        rightView.backgroundColor = Main_Color
         view.addSubview(rightView)
         rightView.snp.makeConstraints { (make) in
             make.right.top.bottom.equalToSuperview()
             make.width.equalTo(17*ScreenScale)
         }
         let topView = UIView.init(frame: .zero)
-        topView.backgroundColor = UIColor.init(hexString: "#293038")
+        topView.backgroundColor = Main_Color
         view.addSubview(topView)
         topView.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
@@ -82,7 +83,7 @@ class WGCameraOverlayView: UIView {
     lazy var bottomView: UIView = {
         let view = UIView.init(frame: .zero)
         self.addSubview(view)
-        view.backgroundColor = UIColor.init(hexString: "#293038")
+        view.backgroundColor = Main_Color
         return view
     }()
     

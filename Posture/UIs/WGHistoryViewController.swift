@@ -26,7 +26,7 @@ class WGHistoryViewController: WGBaseViewController {
         self.closeBtn.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(21*ScreenScale)
             make.top.equalToSuperview().offset(12*ScreenScale+SafeTopHeight)
-            make.width.height.equalTo(35*ScreenScale)
+            make.width.height.equalTo(32*ScreenScale)
         }
         self.historyList.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()

@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.shared.isStatusBarHidden = true
         self.window = UIWindow.init(frame: UIScreen.main.bounds)
-        self.window?.backgroundColor = UIColor.init(hexString: "#293038")
+        self.window?.backgroundColor = Main_Color
         self.window?.rootViewController = WGBaseNavViewController.init(rootViewController: WGHomeViewController.init())
         self.window?.makeKeyAndVisible()
         wg_getCurrentTime()

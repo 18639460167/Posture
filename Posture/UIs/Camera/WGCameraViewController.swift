@@ -41,26 +41,40 @@ class WGCameraViewController: WGBaseViewController {
 
         // Do any additional setup after loading the view.
         self.setUpUI()
+        
+        ME_GetAudioPermission { (success, first) in
+            if success {
+                self.cameraNotAuthView.isHidden = true
+                self.cameraView.cameraMan.setup(false)
+            } else {
+                self.cameraNotAuthView.showAlert = true
+            }
+        }
     }
     
     func setUpUI() {
+        self.view.layer.masksToBounds = true
         self.overlyView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
         self.view.addSubview(self.cameraView.view)
         self.view.bringSubviewToFront(self.overlyView)
         self.closeBtn.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(10*ScreenScale)
+            make.left.equalToSuperview().offset(17*ScreenScale)
             make.size.equalTo(CGSize.init(width: 40*ScreenScale, height: 40*ScreenScale))
             make.top.equalToSuperview().offset(11*ScreenScale+SafeTopHeight)
         }
-        self.firstAlertLbl.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(SafeTopHeight+445*ScreenScale)
-        }
+        
         self.secondAlertLbl.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
-            make.top.equalTo(self.firstAlertLbl.snp_bottom).offset(5*ScreenScale)
+            make.bottom.equalToSuperview().offset(-167*ScreenScale-SafeBottomHeight)
+        }
+        self.firstAlertLbl.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(secondAlertLbl.snp_top).offset(-5*ScreenScale)
+        }
+        self.cameraNotAuthView.snp.makeConstraints { (make) in
+            make.left.right.top.bottom.equalToSuperview()
         }
     }
     
@@ -94,13 +108,24 @@ class WGCameraViewController: WGBaseViewController {
     }()
     
     lazy var cameraView: WGCameraVC = {
-        let width: CGFloat = ScreenWidth-34*ScreenScale
-        let height: CGFloat = 128.0/72.0*width
+        let norScale: CGFloat = 72.0/128.0
+        var width = ScreenWidth-34*ScreenScale
+        var height = ScreenHeight-SafeTopHeight-SafeBottomHeight-160*ScreenScale
+        let greenScale = CGFloat(width/height)
+        print("计算前的scale：\(width) == height:\(height)")
+        if greenScale > norScale {
+            // 宽度固定 高度拉伸
+            height = width / norScale
+        } else {
+            // 高度固定 宽度拉伸
+            width = height*norScale
+        }
+        print("计算后的scale：\(width) == height:\(height)")
         let vc = WGCameraVC.init()
         vc.camerFinish = {[weak self] in
             self?.overlyView.isUserInteractionEnabled = true
         }
-        vc.view.frame = CGRect.init(x: 17*ScreenScale, y: SafeTopHeight, width: width, height: height)
+        vc.view.frame = CGRect.init(x: (ScreenWidth-width)/2.0, y: SafeTopHeight, width: width, height: height)
         return vc
     }()
     
@@ -122,6 +147,14 @@ class WGCameraViewController: WGBaseViewController {
         // Button lights up after adjusting the frame
         label.text = "Make sure the whole body is in the frame"
         return label
+    }()
+    
+    lazy var cameraNotAuthView: WGNotCameraAuthView = {
+        let view = WGNotCameraAuthView.init(frame: .zero)
+        view.showAlert = false
+//        view.showAlert = !WG_FirstCameraPermission
+        self.view.addSubview(view)
+        return view
     }()
 
     @objc func cameraAction() {
@@ -158,6 +191,7 @@ class WGCameraViewController: WGBaseViewController {
         self.frontFinish = false
         self.sideFinish = false
         self.overlyView.changeDirection(btn: self.overlyView.frontBtn)
+        self.overlyView.camerBtn.isUserInteractionEnabled = true
     }
 
 }

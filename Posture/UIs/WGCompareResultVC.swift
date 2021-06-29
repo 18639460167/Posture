@@ -167,11 +167,11 @@ class WGCompareResultVC: WGBaseViewController {
     }()
     // 对比
     @objc func exportAction() {
-        self.enterCameraVC()
+        
     }
     
     @objc func takeTestAction() {
-        
+        self.enterCameraVC()
     }
     /*
     // MARK: - Navigation

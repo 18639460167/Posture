@@ -21,7 +21,7 @@ class WGCameraVC: UIViewController {
         // Do any additional setup after loading the view.
         
         cameraMan.delegate = self
-        cameraMan.setup(false)
+//        cameraMan.setup(false)
     }
     
     override func viewDidAppear(_ animated: Bool) {

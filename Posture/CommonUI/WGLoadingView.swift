@@ -14,7 +14,7 @@ class WGLoadingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.init(hexString: "#293038").withAlphaComponent(0.5)
+        self.backgroundColor = Main_Color.withAlphaComponent(0.6)
         let imageView = UIImageView.init(frame: .zero)
         imageView.image = UIImage.init(named: "loading")
         self.addSubview(imageView)

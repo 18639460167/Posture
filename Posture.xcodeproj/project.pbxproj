@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		25B8A2D2018513D9D878AA53 /* Pods_Posture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A2B15F9F4D1CA7C4088CCF /* Pods_Posture.framework */; };
+		9C590BE5268AC34D00F5AF27 /* WGAboutSpineCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C590BE4268AC34D00F5AF27 /* WGAboutSpineCheckViewController.swift */; };
+		9C8F8A99268B12F700373D55 /* WGNotCameraAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8F8A98268B12F700373D55 /* WGNotCameraAuthView.swift */; };
 		9CB98F0E268469FF00C681DB /* WGCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98F0C268469FF00C681DB /* WGCameraVC.swift */; };
 		9CB98F0F268469FF00C681DB /* WGCameraEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98F0D268469FF00C681DB /* WGCameraEngine.swift */; };
 		9CEC4B9C2680521500D08443 /* WGResourceCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC4B9B2680521500D08443 /* WGResourceCacheTool.swift */; };
@@ -61,6 +63,8 @@
 /* Begin PBXFileReference section */
 		0EC3D93AE737F746C267FD34 /* Pods-Posture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Posture.release.xcconfig"; path = "Target Support Files/Pods-Posture/Pods-Posture.release.xcconfig"; sourceTree = "<group>"; };
 		17A2B15F9F4D1CA7C4088CCF /* Pods_Posture.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Posture.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C590BE4268AC34D00F5AF27 /* WGAboutSpineCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGAboutSpineCheckViewController.swift; sourceTree = "<group>"; };
+		9C8F8A98268B12F700373D55 /* WGNotCameraAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGNotCameraAuthView.swift; sourceTree = "<group>"; };
 		9CB98F0C268469FF00C681DB /* WGCameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGCameraVC.swift; sourceTree = "<group>"; };
 		9CB98F0D268469FF00C681DB /* WGCameraEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGCameraEngine.swift; sourceTree = "<group>"; };
 		9CEC4B9B2680521500D08443 /* WGResourceCacheTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGResourceCacheTool.swift; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 				C19AAB4F2684D6790064D8CC /* WGHistoryViewController.swift */,
 				C19AAB5D2684EBBB0064D8CC /* WGResultDetailVC.swift */,
 				C1B8A7F62686C3BD0068FFB0 /* WGCompareResultVC.swift */,
+				9C590BE4268AC34D00F5AF27 /* WGAboutSpineCheckViewController.swift */,
 			);
 			path = UIs;
 			sourceTree = "<group>";
@@ -158,6 +163,7 @@
 				C19AAB2E26837FC80064D8CC /* WGCameraViewController.swift */,
 				9CB98F0D268469FF00C681DB /* WGCameraEngine.swift */,
 				9CB98F0C268469FF00C681DB /* WGCameraVC.swift */,
+				9C8F8A98268B12F700373D55 /* WGNotCameraAuthView.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -449,6 +455,7 @@
 				C1536B44267CD50600D8879C /* WGBaseViewController.swift in Sources */,
 				C19AAB502684D6790064D8CC /* WGHistoryViewController.swift in Sources */,
 				9CEC4B9C2680521500D08443 /* WGResourceCacheTool.swift in Sources */,
+				9C8F8A99268B12F700373D55 /* WGNotCameraAuthView.swift in Sources */,
 				C1536AF7267CD38700D8879C /* ViewController.swift in Sources */,
 				C1536B3F267CD50100D8879C /* WGBaseNavViewController.swift in Sources */,
 				C1B8A7F72686C3BD0068FFB0 /* WGCompareResultVC.swift in Sources */,
@@ -466,6 +473,7 @@
 				9CEC4BA62680541200D08443 /* WGFileTool.swift in Sources */,
 				9CEC4BA12680526000D08443 /* WGBaseDataModel.swift in Sources */,
 				C1536B6C267CE64100D8879C /* WGImageTool.m in Sources */,
+				9C590BE5268AC34D00F5AF27 /* WGAboutSpineCheckViewController.swift in Sources */,
 				C19AAB2F26837FC80064D8CC /* WGCameraViewController.swift in Sources */,
 				C19AAB5E2684EBBB0064D8CC /* WGResultDetailVC.swift in Sources */,
 			);

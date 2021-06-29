@@ -86,7 +86,7 @@ class WGHomeViewController: WGBaseViewController {
     lazy var spineCheckBtn: UIButton = {
         let btn = UIButton.init(frame: .zero)
         self.view.addSubview(btn)
-        btn.setTitle("bout Spine Check", for: .normal)
+        btn.setTitle("About Spine Check", for: .normal)
         btn.setTitleColor(UIColor.init(hexString: "#7DD6E1"), for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 15*ScreenScale, weight: .regular)
         btn.addTarget(self, action: #selector(spineCheckAction), for: .touchUpInside)
@@ -119,5 +119,6 @@ class WGHomeViewController: WGBaseViewController {
         
     }
     @objc func spineCheckAction() {
+        self.navigationController?.pushViewController(WGAboutSpineCheckViewController.init(), animated: true)
     }
 }

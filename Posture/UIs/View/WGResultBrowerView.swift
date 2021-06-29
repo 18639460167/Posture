@@ -26,7 +26,8 @@ class WGResultImageButton: UIButton {
     
     lazy var resultImageView: UIImageView = {
         let reImageView = UIImageView.init(frame: .zero)
-        reImageView.contentMode = .scaleAspectFit
+        reImageView.contentMode = .scaleAspectFill
+        reImageView.layer.masksToBounds = true
         self.addSubview(reImageView)
         return reImageView
     }()
@@ -46,7 +47,7 @@ class WGResultBrowerView: UIView {
     static let shareBrower: WGResultBrowerView = WGResultBrowerView.init(frame: UIScreen.main.bounds)
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.init(hexString: "#293038")
+        self.backgroundColor = Main_Color
         self.imageView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(SafeTopHeight-20)
             make.bottom.equalToSuperview().offset(-SafeBottomHeight)

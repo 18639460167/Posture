@@ -23,7 +23,7 @@ class WGHistoryCollectionViewCell: UICollectionViewCell {
             make.top.left.bottom.equalToSuperview()
         }
         self.dayLbl.snp.makeConstraints { (make) in
-            make.left.equalTo(self.monthLbl.snp_right).offset(5*ScreenScale)
+            make.left.equalTo(self.monthLbl.snp_right).offset(8*ScreenScale)
             make.top.bottom.equalToSuperview()
         }
         self.tagLbl.snp.makeConstraints { (make) in
@@ -32,7 +32,7 @@ class WGHistoryCollectionViewCell: UICollectionViewCell {
         }
         self.yearLbl.snp.makeConstraints { (make) in
             make.right.equalToSuperview()
-            make.left.equalTo(self.tagLbl.snp_right).offset(5*ScreenScale)
+            make.left.equalTo(self.tagLbl.snp_right).offset(10*ScreenScale)
         }
     }
     required init?(coder: NSCoder) {

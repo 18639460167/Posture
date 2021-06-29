@@ -130,8 +130,26 @@ class WGCameraEngine: NSObject {
                 var resultImage = image.zs_fixedImageToUpOrientation()
                 WGImageTool.compressedImageFiles(resultImage) { (data) in
                     resultImage = UIImage.init(data: data) ?? resultImage
-                    let imageHeight = 486.0/341.0*resultImage.size.width
-                    let rect = CGRect.init(x: 0, y: 0, width: resultImage.size.width, height: ceil(imageHeight))
+                    
+                    let norScale: CGFloat = 72.0/128.0
+                    let width = ScreenWidth-34*ScreenScale
+                    let height = ScreenHeight-SafeTopHeight-SafeBottomHeight-160*ScreenScale
+                    let greenScale = CGFloat(width/height)
+                    var startX: CGFloat = 0
+                    var startY: CGFloat = 0
+                    var imageWidth: CGFloat = resultImage.size.width
+                    var imageHeight: CGFloat = resultImage.size.height
+                    if greenScale > norScale {
+                        // 宽度固定 高度拉伸
+                        startY = 0
+                        imageHeight = resultImage.size.width / greenScale
+                    } else {
+                        let resultWidth = height*norScale
+                        let scale = (1-width/resultWidth)/2.0
+                        startX = scale*imageWidth
+                        imageWidth = imageWidth-startX*2.0
+                    }
+                    let rect = CGRect.init(x: startX, y: startY, width: ceil(imageWidth), height: ceil(imageHeight))
                     print("裁剪旋转之后结果图:\(resultImage);\(image);rect:\(rect)")
                     resultImage = resultImage.cropImageWithArea(rect) ?? resultImage
                     print("裁剪旋转之后结果图:\(resultImage);\(image)")

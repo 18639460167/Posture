@@ -29,6 +29,8 @@ public let SafeBottomHeight: CGFloat = SafeAreaInsets.bottom
 let wordKean: CGFloat = 2.0     // 字间距
 let lineHeight: CGFloat = 3.0   // 行间距
 
+let Main_Color = UIColor.init(hexString: "#293038")
+
 let dayTimeInfos: [String: String] = [
     "1": "st", "2": "nd","3": "rd","4": "th","6": "th",
     "7": "th","8": "th","9": "th","10": "th","11": "th","12": "th",
@@ -68,7 +70,13 @@ func wg_getImageFromView(view:UIView) ->UIImage{
 
 }
 
-// 获取麦克风权限
+// 是否是第一次获取权限
+var WG_FirstCameraPermission: Bool {
+    let audioStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+    return audioStatus == .notDetermined
+}
+
+// 获取相机权限
 // auth：权限状态-1成功-0失败
 // isFirst: 是否是首次获取
 func ME_GetAudioPermission(handle: ((_ auth: Bool,_ isFirst: Bool) -> Void)?) {
@@ -370,18 +378,7 @@ extension UIViewController {
                 return
             }
         }
-        ME_GetAudioPermission { (success, first) in
-            if success {
-                let cameraVC = WGCameraViewController.init()
-                self.navigationController?.pushViewController(cameraVC, animated: true)
-            } else {
-                // 弹出权限
-                MECommonAlertView.showAlertView(title: "请先开启相机权限", destriciton: "需要根据您的照片进行识别", cancel: "放弃", confirm: "允许") { (tag) in
-                    if tag == 2 {
-                        ME_OpenSystemSetting()
-                    }
-                }
-            }
-        }
+        let cameraVC = WGCameraViewController.init()
+        self.navigationController?.pushViewController(cameraVC, animated: true)
     }
 }

@@ -131,8 +131,12 @@ class WGBodyPartsInfoModel: WGBaseDataModel {
     func getBodyCenter(size: CGSize, isFront: Bool = false) -> UIView {
         let lineWidth: CGFloat = 5.0
         let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: size.width, height: size.height))
-        let point1: CGPoint = CGPoint.init(x: self.right_ankle.x, y: self.right_ankle.y)
-        let point2: CGPoint = CGPoint.init(x: self.left_ankle.x, y: self.left_ankle.y)
+        var point1: CGPoint = CGPoint.init(x: self.right_ankle.x, y: self.right_ankle.y)
+        var point2: CGPoint = CGPoint.init(x: self.left_ankle.x, y: self.left_ankle.y)
+        if left_ankle.x < right_ankle.x {
+            point1 = CGPoint.init(x: self.left_ankle.x, y: self.left_ankle.y)
+            point2 = CGPoint.init(x: self.right_ankle.x, y: self.right_ankle.y)
+        }
         let centerX = (point2.x+point1.x)/2.0
         let centerY = (point2.y+point1.y)/2.0
         let startPointX: CGFloat = centerX
